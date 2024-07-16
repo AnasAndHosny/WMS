@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\UpdateUserProfileRequest;
 use App\Http\Requests\Auth\UserSigninRequest;
 use App\Http\Requests\Auth\UserSignupRequest;
 use App\Http\Responses\Response;
@@ -24,7 +25,7 @@ class AuthController extends Controller
         try {
             $data = $this->userService->register($request->validated());
             return Response::Success($data['user'], $data['message'], $data['code']);
-        }catch (Throwable $th) {
+        } catch (Throwable $th) {
             $message = $th->getMessage();
             return Response::Error($data, $message);
         }
@@ -36,7 +37,7 @@ class AuthController extends Controller
         try {
             $data = $this->userService->login($request);
             return Response::Success($data['user'], $data['message'], $data['code']);
-        }catch (Throwable $th) {
+        } catch (Throwable $th) {
             $message = $th->getMessage();
             return Response::Error($data, $message);
         }
@@ -48,7 +49,31 @@ class AuthController extends Controller
         try {
             $data = $this->userService->logout();
             return Response::Success($data['user'], $data['message'], $data['code']);
-        }catch (Throwable $th) {
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+
+    public function showProfile(): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->userService->showProfile();
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+
+    public function updateProfile(UpdateUserProfileRequest $request): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->userService->updateProfile($request);
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
             $message = $th->getMessage();
             return Response::Error($data, $message);
         }

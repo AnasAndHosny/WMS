@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployableProduct\UpdateEmployableProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Responses\Response;
@@ -73,6 +74,18 @@ class ProductController extends Controller
         $data = [];
         try {
             $data = $this->productService->update($request, $product);
+            return Response::Success($data['product'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+
+    public function updateMinQuantity(UpdateEmployableProductRequest $request, Product $product): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->productService->updateMinQuantity($request, $product);
             return Response::Success($data['product'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

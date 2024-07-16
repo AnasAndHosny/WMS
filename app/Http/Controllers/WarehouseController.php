@@ -37,7 +37,7 @@ class WarehouseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreWarehouseRequest $request)
+    public function store(StoreWarehouseRequest $request): JsonResponse
     {
         $data = [];
         try {
@@ -52,7 +52,7 @@ class WarehouseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Warehouse $warehouse)
+    public function show(Warehouse $warehouse): JsonResponse
     {
         $data = [];
         try {
@@ -67,12 +67,24 @@ class WarehouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse)
+    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse): JsonResponse
     {
         $data = [];
         try {
             $data = $this->warehouseService->update($request, $warehouse);
             return Response::Success($data['warehouse'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+
+    public function showDistributionCenters(): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->warehouseService->showDistributionCenters();
+            return Response::Success($data['distributionCenter'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
             return Response::Error($data, $message);

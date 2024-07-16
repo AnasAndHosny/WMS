@@ -67,9 +67,8 @@ class EmployeeService
     public function update($request, Employee $employee): array
     {
         $employee = DB::transaction(function () use ($request, $employee): Employee {
-            $image = ImageService::update($request, $employee);
-
             $user = $employee->user;
+            $image = ImageService::update($request, $user);
             $user->update([
                 'image' => $image,
                 'name' => $request['username'] ?? $user['name'],
@@ -120,9 +119,9 @@ class EmployeeService
         $employee = Employee::where('user_id', $userId)->first();
 
         $employee = DB::transaction(function () use ($request, $employee): Employee {
-            $image = ImageService::update($request, $employee);
-
             $user = $employee->user;
+            $image = ImageService::update($request, $user);
+
             $user->update([
                 'image' => $image,
                 'name' => $request['username'] ?? $user['name'],

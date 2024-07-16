@@ -204,6 +204,7 @@ return [
         'available'             => 'مُتاح',
         'size'                  => 'الحجم',
         'price'                 => 'السعر',
+        'cost'                  => 'التكلفة',
         'desc'                  => 'نبذه',
         'title'                 => 'العنوان',
         'q'                     => 'البحث',
@@ -222,6 +223,15 @@ return [
         'employable_id'         => 'مكان العمل',
         'phone_number'          => 'رقم الهاتف',
         'ssn'                   => 'الرقم الوطني',
+        'manufacturer_id'       => 'الشركة المصنعة',
+        'max'                   => 'القيمة القصوى',
+        'active'                => 'نشاط المنتج',
+        'order_id'              => 'الطلبية',
+        'shipping_company_id'   => 'شركة الشحن',
+        'driver_name'           => 'اسم السائق',
+        'shipping_cost'         => 'تكلفة الشحن',
+        'products'              => "المنتجات",
+        'status_id'             => 'حالة الطلبية',
     ],
 
 ];

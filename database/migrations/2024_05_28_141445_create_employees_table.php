@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('gender');
             $table->date('birthday');
             $table->string('phone_number')->nullable();
-            $table->string('ssn')->nullable();
+            $table->string('ssn');
             $table->foreignId('state_id')
                 ->constrained('states')
                 ->cascadeOnUpdate()

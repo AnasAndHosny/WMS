@@ -42,14 +42,16 @@ class UpdateEmployeeRequest extends FormRequest
             'username' => ['sometimes', 'string'],
             'email' => ['sometimes', 'unique:users,email', 'email'],
             'full_name' => ['sometimes', 'string'],
-            'gender'=> ['sometimes', 'in:male,female'],
+            'gender' => ['sometimes', 'in:male,female'],
             'birthday' => ['sometimes', 'date_format:Y-m-d'],
             'phone_number' => ['nullable', 'numeric', 'digits:10', 'starts_with:09'],
             'state_id' => ['sometimes', 'exists:states,id'],
             'address' => ['nullable', 'string'],
-            'ssn' => ['nullable', 'numeric', 'digits:11'],
-            'role_id' => [new RequiredIf(($this->employable_type ?? $currentEmployableType) != $currentEmployableType),
-                          Rule::exists('roles', 'id')->where('type', $roleType)],
+            'ssn' => ['sometimes', 'numeric', 'digits:11'],
+            'role_id' => [
+                new RequiredIf(($this->employable_type ?? $currentEmployableType) != $currentEmployableType),
+                Rule::exists('roles', 'id')->where('type', $roleType)
+            ],
             'employable_type' => ['required_with:employable_id', 'in:' . implode(',', $availableEmployableTypes)],
             'employable_id' => ['required_with:employable_type', new Employable($this->employable_type)]
         ];

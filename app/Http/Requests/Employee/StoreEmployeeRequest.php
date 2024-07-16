@@ -43,7 +43,7 @@ class StoreEmployeeRequest extends FormRequest
             'phone_number' => ['nullable', 'numeric', 'digits:10', 'starts_with:09'],
             'state_id' => ['required', 'exists:states,id'],
             'address' => ['nullable', 'string'],
-            'ssn' => ['nullable', 'numeric', 'digits:11'],
+            'ssn' => ['required', 'numeric', 'digits:11'],
             'role_id' => ['required', Rule::exists('roles', 'id')->where('type', $roleType)],
             'employable_type' => ['required', 'in:' . implode(',', $availableEmployableTypes)],
             'employable_id' => ['required', new Employable($this->employable_type)]

@@ -64,5 +64,16 @@
     "employees":"الموظفين",
     "employee":"الموظف",
     "The role field is required when changing the employable type.":"حقل الرتبة الوظيفية مطلوب عند تغيير نوع القابل للتوظيف.",
-    "roles":"الرتب الوظيفية"
+    "roles":"الرتب الوظيفية",
+    "manufacturer":"االمصنع",
+    "The ordered quantity exceeds the available stock.":"الكمية المطلوبة أكبر من الكمية المتاحة في المخزون.",
+    "order":"الطلبية",
+    "buy orders":"طلبيات الشراء",
+    "sell orders":"طلبيات المبيع",
+    "order status":"حالة الطلبية",
+    "shipping companies":"شركات الشحن",
+    "shipping company":"شركة الشحن",
+    "shipments":"الشحنات",
+    "shipment":"الشحنة",
+    "manufacturer orders":"طلبيات المصانع"
 }

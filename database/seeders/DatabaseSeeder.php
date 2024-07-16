@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RolesPermissionsSeeder::class,
-            CitySeeder::class
+            CitySeeder::class,
+            OrderStatusSeeder::class,
         ]);
     }
 }

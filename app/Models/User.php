@@ -8,6 +8,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -55,5 +56,28 @@ class User extends Authenticatable
     public function employee(): HasOne
     {
         return $this->hasOne(Employee::class);
+    }
+
+    // Define the relationship for buy orders
+    public function buyOrders()
+    {
+        return $this->employee->employable->buyOrders()
+            ->where('orderable_from_type', Warehouse::class);
+    }
+
+    // Define the relationship for sell orders
+    public function sellOrders()
+    {
+        return $this->employee->employable->sellOrders();
+    }
+
+    public function manufacturerOrders()
+    {
+        return $this->employee->employable->buyOrders()
+            ->where('orderable_from_type', Manufacturer::class);
+    }
+
+    public function shipments()
+    {
     }
 }

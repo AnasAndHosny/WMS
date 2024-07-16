@@ -1,21 +1,26 @@
 <?php
 
-use App\Http\Responses\Response;
-use App\Models\Category;
 use App\Models\City;
-use App\Models\DistributionCenter;
-use App\Models\Employee;
-use App\Models\Product;
-use App\Models\State;
-use App\Models\SubCategory;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\State;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Employee;
 use App\Models\Warehouse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\SubCategory;
+use App\Models\Manufacturer;
+use App\Models\StoredProduct;
+use App\Http\Responses\Response;
+use App\Models\DistributionCenter;
+use App\Models\Shipment;
+use App\Models\ShippingCompany;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -53,8 +58,12 @@ return Application::configure(basePath: dirname(__DIR__))
                     State::class => 'state',
                     Warehouse::class => 'warehouse',
                     DistributionCenter::class => 'distribution center',
-                    Product::class => 'product',
+                    Product::class, StoredProduct::class => 'product',
                     Employee::class => 'employee',
+                    Manufacturer::class => 'manufacturer',
+                    Order::class => 'order',
+                    ShippingCompany::class => 'shipping company',
+                    Shipment::class => 'shipment',
                     default => 'record'
                 };
 

@@ -26,13 +26,13 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'image' => ['image', 'nullable', 'mimes:jpeg,png,bmp,jpg,gif,svg', 'max:256'],
-            'name_ar' => ['string', 'unique:products'],
-            'name_en' => ['string', 'unique:products'],
-            'description_ar' => ['string'],
-            'description_en' => ['string'],
-            'manufacturer' => ['string'],
-            'price' => ['regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
-            'subcategory_id' => ['exists:sub_categories,id']
+            'name_ar' => ['sometimes', 'string', 'unique:products'],
+            'name_en' => ['sometimes', 'string', 'unique:products'],
+            'description_ar' => ['sometimes', 'string'],
+            'description_en' => ['sometimes', 'string'],
+            'manufacturer_id' => ['sometimes', 'string', 'exists:manufacturers,id'],
+            'price' => ['sometimes', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
+            'subcategory_id' => ['sometimes', 'exists:sub_categories,id']
         ];
     }
 

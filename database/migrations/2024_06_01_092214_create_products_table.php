@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('name_en')->unique();
             $table->string('description_ar')->nullable()->default(null);
             $table->string('description_en')->nullable()->default(null);
-            $table->string('manufacturer')->nullable()->default(null);
+            $table->foreignId('manufacturer_id')
+                ->constrained('manufacturers')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->unsignedInteger('price');
             $table->foreignId('subcategory_id')
-                  ->constrained('sub_categories')
-                  ->cascadeOnUpdate()
-                  ->cascadeOnDelete();
+                ->constrained('sub_categories')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

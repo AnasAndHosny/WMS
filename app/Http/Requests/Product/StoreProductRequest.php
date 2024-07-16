@@ -30,7 +30,7 @@ class StoreProductRequest extends FormRequest
             'name_en' => ['required', 'string', 'unique:products'],
             'description_ar' => ['nullable','string'],
             'description_en' => ['nullable','string'],
-            'manufacturer' => ['nullable','string'],
+            'manufacturer_id' => ['required','exists:manufacturers,id'],
             'price' => ['required', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
             'subcategory_id' => ['required', 'exists:sub_categories,id']
         ];
