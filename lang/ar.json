@@ -75,5 +75,7 @@
     "shipping company":"شركة الشحن",
     "shipments":"الشحنات",
     "shipment":"الشحنة",
-    "manufacturer orders":"طلبيات المصانع"
+    "manufacturer orders":"طلبيات المصانع",
+    "sales":"المبيعات",
+    "sale":"طلب المبيع"
 }

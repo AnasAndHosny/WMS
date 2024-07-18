@@ -17,6 +17,7 @@ use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\StoredProductController;
 use App\Http\Controllers\ShippingCompanyController;
 use App\Http\Controllers\DistributionCenterController;
+use App\Http\Controllers\SaleController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -124,6 +125,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', 'store');
         Route::get('{shipment}', 'show');
         Route::patch('{shipment}', 'update');
+    });
+
+    Route::prefix('sales')->controller(SaleController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('{sale}', 'show');
     });
 });
 

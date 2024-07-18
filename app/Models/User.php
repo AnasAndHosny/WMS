@@ -71,6 +71,12 @@ class User extends Authenticatable
         return $this->employee->employable->sellOrders();
     }
 
+    // Define the relationship for sales
+    public function sales()
+    {
+        return $this->employee->employable->sales();
+    }
+
     public function manufacturerOrders()
     {
         return $this->employee->employable->buyOrders()

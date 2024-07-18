@@ -13,6 +13,7 @@ use App\Models\Manufacturer;
 use App\Models\StoredProduct;
 use App\Http\Responses\Response;
 use App\Models\DistributionCenter;
+use App\Models\Sale;
 use App\Models\Shipment;
 use App\Models\ShippingCompany;
 use Illuminate\Foundation\Application;
@@ -64,6 +65,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     Order::class => 'order',
                     ShippingCompany::class => 'shipping company',
                     Shipment::class => 'shipment',
+                    Sale::class => 'sale',
                     default => 'record'
                 };
 

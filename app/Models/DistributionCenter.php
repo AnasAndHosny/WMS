@@ -62,4 +62,9 @@ class DistributionCenter extends Model
     {
         return $this->morphMany(Order::class, 'orderable_by');
     }
+
+    public function sales(): MorphMany
+    {
+        return $this->morphMany(Sale::class, 'salable');
+    }
 }

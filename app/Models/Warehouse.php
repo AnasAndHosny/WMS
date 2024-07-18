@@ -54,11 +54,16 @@ class Warehouse extends Model
 
     public function buyOrders(): MorphMany
     {
-        return $this->morphMany(Order::class, 'orderable_by')->orderBy('created_date', 'desc');
+        return $this->morphMany(Order::class, 'orderable_by');
     }
 
     public function sellOrders(): MorphMany
     {
         return $this->morphMany(Order::class, 'orderable_from');
+    }
+
+    public function sales(): MorphMany
+    {
+        return $this->morphMany(Sale::class, 'salable');
     }
 }
