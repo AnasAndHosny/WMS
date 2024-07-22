@@ -38,7 +38,6 @@ class StoredProductResource extends JsonResource
                 $this->storable_id == $employable->id && $this->storable_type == $employableType,
                 [
                     'valid_quantity' => (int)$this->valid_quantity,
-                    'expired_quantity' => (int)$this->expired_quantity,
                     'active' => (int)$this->active,
                     'max' => (int)$this->max,
                 ],

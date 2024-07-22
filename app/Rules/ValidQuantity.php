@@ -35,7 +35,6 @@ class ValidQuantity implements ValidationRule
             ->first();
 
         if (!$storedProduct) {
-            $fail('validation.exists')->translate();
             return;
         }
 

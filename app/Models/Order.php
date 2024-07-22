@@ -5,12 +5,12 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -23,46 +23,11 @@ class Order extends Model
         'orderable_by_id',
         'status_id',
         'order_cost',
-        'shipping_cost',
         'total_cost',
         'user_id'
     ];
 
-    protected static $availableOrderableFrom = [
-        'Warehouse' => Warehouse::class,
-        'Manufacturer' => Manufacturer::class,
-    ];
-
-    protected function orderableFromType(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => array_search($value, self::$availableOrderableFrom) ?: $value,
-            set: fn ($value) => self::$availableOrderableFrom[$value] ?? $value
-        );
-    }
-
-    protected static $availableOrderableBy = [
-        'Warehouse' => Warehouse::class,
-        'DistributionCenter' => DistributionCenter::class,
-    ];
-
-    protected function orderableByType(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => array_search($value, self::$availableOrderableBy) ?: $value,
-            set: fn ($value) => self::$availableOrderableBy[$value] ?? $value
-        );
-    }
-
     protected function orderCost(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100
-        );
-    }
-
-    protected function shippingCost(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $value / 100,
@@ -90,6 +55,26 @@ class Order extends Model
         return Attribute::make(
             get: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
         );
+    }
+
+    public function scopeOrderedBefor($query, $date)
+    {
+        return $query->where('created_at', '<=', Carbon::parse($date));
+    }
+
+    public function scopeOrderedAfter($query, $date)
+    {
+        return $query->where('created_at', '>=', Carbon::parse($date));
+    }
+
+    public function scopeCheaperThan($query, $price)
+    {
+        return $query->where('total_cost', '<=', $price * 100);
+    }
+
+    public function scopeMoreExpensiveThan($query, $price)
+    {
+        return $query->where('total_cost', '>=', $price * 100);
     }
 
     public function orderableFrom(): MorphTo
@@ -120,10 +105,5 @@ class Order extends Model
     public function shipment(): HasOne
     {
         return $this->hasOne(Shipment::class, 'order_id');
-    }
-
-    public static function getAvailableOrderableFrom(): array
-    {
-        return self::$availableOrderableFrom;
     }
 }

@@ -2,51 +2,46 @@
 
 namespace App\Services;
 
-use App\Models\Order;
-use App\Models\Warehouse;
-use App\Models\OrderStatus;
-use App\Models\Manufacturer;
-use App\Models\StoredProduct;
-use App\Models\OrderedProduct;
-use App\Models\EmployableProduct;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
+use App\Models\EmployableProduct;
+use App\Models\Manufacturer;
+use App\Models\Order;
+use App\Models\OrderedProduct;
+use App\Models\OrderStatus;
+use App\Models\StoredProduct;
+use App\Models\Warehouse;
+use App\Queries\OrderListQuery;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
-    public function buyOrdersList(): array
+    public function buyOrdersList($request): array
     {
-        $buyOrders = Auth::user()
-            ->buyOrders()
-            ->orderBy('id', 'DESC')->paginate();
+        $buyOrders = new OrderListQuery(Auth::user()->buyOrders(), $request, false);
 
-        $buyOrders = new OrderCollection($buyOrders);
+        $buyOrders = new OrderCollection($buyOrders->paginate());
         $message = __('messages.index_success', ['class' => __('buy orders')]);
         $code = 200;
         return ['data' => $buyOrders, 'message' => $message, 'code' => $code];
     }
 
-    public function sellOrdersList(): array
+    public function sellOrdersList($request): array
     {
-        $sellOrders = Auth::user()
-            ->sellOrders()
-            ->orderBy('id', 'DESC')->paginate();
+        $sellOrders = new OrderListQuery(Auth::user()->sellOrders(), $request);
 
-        $sellOrders = new OrderCollection($sellOrders);
+        $sellOrders = new OrderCollection($sellOrders->paginate());
         $message = __('messages.index_success', ['class' => __('sell orders')]);
         $code = 200;
         return ['data' => $sellOrders, 'message' => $message, 'code' => $code];
     }
 
-    public function manufacturerOrdersList(): array
+    public function manufacturerOrdersList($request): array
     {
-        $manufacturerOrders = Auth::user()
-            ->manufacturerOrders()
-            ->orderBy('id', 'DESC')->paginate();
+        $manufacturerOrders = new OrderListQuery(Auth::user()->manufacturerOrders(), $request, false);
 
-        $manufacturerOrders = new OrderCollection($manufacturerOrders);
+        $manufacturerOrders = new OrderCollection($manufacturerOrders->paginate());
         $message = __('messages.index_success', ['class' => __('manufacturer orders')]);
         $code = 200;
         return ['data' => $manufacturerOrders, 'message' => $message, 'code' => $code];
@@ -79,7 +74,7 @@ class OrderService
             // Create and save the order
             $order = Order::query()->create([
                 'orderable_from_type' => Warehouse::class,
-                'orderable_from_id' => $request['warehouse_id'],
+                'orderable_from_id' => $request['warehouse_id'] ?? Auth::user()->employee->employable->warehouse_id,
                 'orderable_by_type' => $orderedByModel,
                 'orderable_by_id' => $orderedById,
                 'status_id' => OrderStatus::findByName('Pending')->id,

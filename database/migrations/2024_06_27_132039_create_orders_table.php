@@ -20,7 +20,6 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->unsignedInteger('order_cost');
-            $table->unsignedInteger('shipping_cost')->default(0);
             $table->unsignedInteger('total_cost');
             $table->foreignId('user_id')
                 ->constrained('users')

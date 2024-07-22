@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Order\StoreWarehouseOrderRequest;
 use App\Http\Requests\Order\StoreManufacturerOrderRequest;
 use App\Http\Requests\Order\UpdateManufacturerOrderRequest;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -23,11 +24,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function buyOrdersList(): JsonResponse
+    public function buyOrdersList(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->orderService->buyOrdersList();
+            $data = $this->orderService->buyOrdersList($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -38,11 +39,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function sellOrdersList(): JsonResponse
+    public function sellOrdersList(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->orderService->sellOrdersList();
+            $data = $this->orderService->sellOrdersList($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -53,11 +54,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function manufacturerOrdersList(): JsonResponse
+    public function manufacturerOrdersList(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->orderService->manufacturerOrdersList();
+            $data = $this->orderService->manufacturerOrdersList($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
