@@ -13,11 +13,17 @@ class WarehouseService
 {
     public function index(): array
     {
-        $query = Warehouse::all();
-        if (Auth::user()->roles->first()->type == 1) {
-        $query->where('id', '!=', Auth::user()->employee->employable_id);
+        $employee = Auth::user()->employee;
+
+        $query = Warehouse::query();
+
+        if ($employee) {
+            $userWarehouse = Auth::user()->employee->employable;
+            $query->when(get_class($userWarehouse) == Warehouse::class)
+                ->where('id', '!=', $userWarehouse->id);
         }
-        $warehouse = WarehouseResource::collection($query);
+
+        $warehouse = WarehouseResource::collection($query->get());
         $message = __('messages.index_success', ['class' => __('warehouses')]);
         $code = 200;
         return ['warehouse' => $warehouse, 'message' => $message, 'code' => $code];

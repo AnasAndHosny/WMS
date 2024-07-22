@@ -29,7 +29,7 @@ class UpdateEmployeeProfileRequest extends FormRequest
     {
         return [
             'image' => ['image', 'nullable', 'mimes:jpeg,png,bmp,jpg,gif,svg', 'max:256'],
-            'username' => ['sometimes', 'string'],
+            'username' => ['sometimes', 'string', 'unique:users,name'],
             'email' => ['sometimes', 'unique:users,email', 'email'],
             'full_name' => ['sometimes', 'string'],
             'gender'=> ['sometimes', 'in:male,female'],

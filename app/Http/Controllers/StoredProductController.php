@@ -8,6 +8,7 @@ use App\Http\Responses\Response;
 use App\Models\StoredProduct;
 use App\Models\Warehouse;
 use App\Services\StoredProductService;
+use Illuminate\Http\JsonResponse;
 use Throwable;
 
 class StoredProductController extends Controller
@@ -22,7 +23,7 @@ class StoredProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $data = [];
         try {
@@ -34,11 +35,23 @@ class StoredProductController extends Controller
         }
     }
 
-    public function warehouseProductList(Warehouse $warehouse)
+    public function warehousesProductList(Warehouse $warehouse): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->storedProductService->warehouseProductList($warehouse);
+            $data = $this->storedProductService->warehousesProductList($warehouse);
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+
+    public function warehouseProductList(): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->storedProductService->warehouseProductList();
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -49,7 +62,7 @@ class StoredProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStoredProductRequest $request)
+    public function store(StoreStoredProductRequest $request): JsonResponse
     {
         //
     }
@@ -57,7 +70,7 @@ class StoredProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(StoredProduct $storedProduct)
+    public function show(StoredProduct $storedProduct): JsonResponse
     {
         $data = [];
         try {
@@ -69,7 +82,7 @@ class StoredProductController extends Controller
         }
     }
 
-    public function update(UpdateStoredProductRequest $request, StoredProduct $storedProduct)
+    public function update(UpdateStoredProductRequest $request, StoredProduct $storedProduct): JsonResponse
     {
         $data = [];
         try {

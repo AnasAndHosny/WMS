@@ -77,5 +77,10 @@
     "shipment":"الشحنة",
     "manufacturer orders":"طلبيات المصانع",
     "sales":"المبيعات",
-    "sale":"طلب المبيع"
+    "sale":"طلب المبيع",
+    "User email & password does not match with our record.":"البريد الإلكتروني وكلمة المرور غير متطابقان.",
+    "User logged in successfully.":"تم تسجيل الدخول بنجاح.",
+    "User not found.":"المستخدم غير موجود.",
+    "User logged out successfully.":"تم تسجيل الخروج بنجاح.",
+    "invalid token.":"المعرف غير صالح."
 }

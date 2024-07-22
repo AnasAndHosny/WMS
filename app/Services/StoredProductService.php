@@ -19,8 +19,19 @@ class StoredProductService
         return ['data' => $products, 'message' => $message, 'code' => $code];
     }
 
-    public function warehouseProductList(Warehouse $warehouse): array
+    public function warehousesProductList(Warehouse $warehouse): array
     {
+        $products = $warehouse->storedProducts()->active()->paginate();
+        $products = new StoredProductCollection($products);
+        $message = __('messages.index_success', ['class' => __('products')]);
+        $code = 200;
+        return ['data' => $products, 'message' => $message, 'code' => $code];
+    }
+
+    public function warehouseProductList(): array
+    {
+        $warehouse = Auth::user()->employee->employable->warehouse;
+
         $products = $warehouse->storedProducts()->active()->paginate();
         $products = new StoredProductCollection($products);
         $message = __('messages.index_success', ['class' => __('products')]);

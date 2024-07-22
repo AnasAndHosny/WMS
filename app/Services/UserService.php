@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Warehouse;
 use Spatie\Permission\Models\Role;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
@@ -49,16 +50,16 @@ class UserService
             ->first();
         if (!is_null($user)) {
             if (!Auth::attempt($request->only(['email', 'password']))) {
-                $message = 'user email & password does not match with our record.';
+                $message = __('User email & password does not match with our record.');
                 $code = 401;
             } else {
                 $user = $this->appendRolesAndPermissions($user);
                 $user['token'] = $user->createToken('token')->plainTextToken;
-                $message = 'User logged in successfully.';
+                $message = __('User logged in successfully.');
                 $code = 200;
             }
         } else {
-            $message = 'User not found.';
+            $message = __('User not found.');
             $code = 404;
         }
         return ['user' => $user, 'message' => $message, 'code' => $code];
@@ -69,10 +70,10 @@ class UserService
         $user = Auth::user();
         if (!is_null(Auth::user())) {
             Auth::user()->currentAccessToken()->delete();
-            $message = 'User logged out successfully.';
+            $message = __('User logged out successfully.');
             $code = 200;
         } else {
-            $message = 'invalid token.';
+            $message = __('invalid token.');
             $code = 404;
         }
         return ['user' => $user, 'message' => $message, 'code' => $code];
@@ -80,6 +81,7 @@ class UserService
 
     private function appendRolesAndPermissions($user)
     {
+        $currentUser = User::find($user['id']);
         $roles = [];
         foreach ($user->roles as $role) {
             $roles[] = $role->name;
@@ -91,7 +93,14 @@ class UserService
             $permissions[] = $permission->name;
         }
         unset($user['permissions']);
-        $user['permissions'] = $permissions;
+        $user['permissions'] = $currentUser->getAllPermissions()->pluck('name');
+
+        $goTo = 'admin';
+
+        if ($currentUser->employee) {
+            $goTo = get_class($currentUser->employee->employable) == Warehouse::class ? 'warehouse' : 'DistributionCenter';
+        }
+        $user['go_to'] = $goTo;
 
         return $user;
     }

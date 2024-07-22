@@ -34,7 +34,7 @@ class StoreEmployeeRequest extends FormRequest
 
         return [
             'image' => ['image', 'nullable', 'mimes:jpeg,png,bmp,jpg,gif,svg', 'max:256'],
-            'username' => ['required', 'string'],
+            'username' => ['required', 'string', 'unique:users,name'],
             'email' => ['required', 'unique:users,email', 'email'],
             'password' => ['required', 'min:8'],
             'full_name' => ['required', 'string'],

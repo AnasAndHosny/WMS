@@ -69,7 +69,7 @@ class StoreWarehouseOrderRequest extends FormRequest
                 'required',
                 'integer',
                 'min:1',
-                new ValidQuantity($this->warehouse_id, $product['id']),
+                new ValidQuantity($warehouseId, $product['id']),
             ];
         }
 
