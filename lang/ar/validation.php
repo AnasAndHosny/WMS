@@ -232,6 +232,8 @@ return [
         'shipping_cost'         => 'تكلفة الشحن',
         'products'              => "المنتجات",
         'status_id'             => 'حالة الطلبية',
+        'type'                  => 'النوع',
+        'permissions'           => 'الصلاحيات',
     ],
 
 ];

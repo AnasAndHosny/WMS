@@ -38,6 +38,7 @@ class RolesPermissionsSeeder extends Seeder
             'orders.index', 'orders.buy.store', 'orders.manufacturer.store', 'orders.show', 'orders.sell.update', 'orders.buy.update', 'orders.own.update',
             'shippingCompany.index', 'shippingCompany.store', 'shippingCompany.show', 'shippingCompany.update',
             'shipment.index', 'shipment.store', 'shipment.show',
+            'role.index', 'role.store'
         ];
 
         // Create permissions

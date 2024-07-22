@@ -24,7 +24,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('register', 'register');
     Route::post('login', 'login');
     Route::get('logout', 'logout')->middleware('auth:sanctum');
 });
@@ -132,6 +131,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', 'store')->middleware('can:sale.store');
         Route::get('{sale}', 'show')->middleware('can:view,sale');
     });
+
+    Route::prefix('roles')->controller(RoleController::class)->group(function () {
+        Route::get('warehouse', 'warehouseRolesList')->middleware('can:role.index');
+        Route::get('distribution-center', 'distributionCenterRolesList')->middleware('can:role.index');
+        Route::post('/', 'store')->middleware('can:role.store');
+    });
 });
 
 Route::prefix('cities')->controller(CityController::class)->group(function () {
@@ -144,9 +149,4 @@ Route::prefix('states')->controller(StateController::class)->group(function () {
     Route::post('/', 'store');
     Route::get('{state}', 'show');
     Route::patch('{state}', 'update');
-});
-
-Route::prefix('roles')->controller(RoleController::class)->group(function () {
-    Route::get('warehouse', 'warehouseRolesList');
-    Route::get('distribution-center', 'distributionCenterRolesList');
 });

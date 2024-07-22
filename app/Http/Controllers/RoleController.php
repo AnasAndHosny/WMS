@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRoleRequest;
 use Throwable;
 use App\Services\RoleService;
 use App\Http\Responses\Response;
@@ -40,6 +41,18 @@ class RoleController extends Controller
         $data = [];
         try {
             $data = $this->roleService->distributionCenterRolesList();
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+
+    public function store(StoreRoleRequest $request): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->roleService->store($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
