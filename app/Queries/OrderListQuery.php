@@ -2,7 +2,6 @@
 
 namespace App\Queries;
 
-use Illuminate\Support\Facades\App;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;

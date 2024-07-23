@@ -205,6 +205,7 @@ return [
         'order_id'                => 'order',
         'shipping_company_id'     => 'shipping company',
         'status_id'               => 'order status',
+        'cause_id'                => 'destruction cause',
     ],
 
 ];

@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Destruction;
+use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\App;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Warehouse extends Model
 {
@@ -65,5 +66,10 @@ class Warehouse extends Model
     public function sales(): MorphMany
     {
         return $this->morphMany(Sale::class, 'salable');
+    }
+
+    public function destructions(): MorphMany
+    {
+        return $this->morphMany(Destruction::class, 'destructionable');
     }
 }

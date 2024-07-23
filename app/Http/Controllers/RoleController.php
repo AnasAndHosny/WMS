@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRoleRequest;
-use Throwable;
-use App\Services\RoleService;
+use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Responses\Response;
+use App\Services\RoleService;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 
 class RoleController extends Controller

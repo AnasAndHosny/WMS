@@ -83,5 +83,8 @@
     "User not found.":"المستخدم غير موجود.",
     "User logged out successfully.":"تم تسجيل الخروج بنجاح.",
     "invalid token.":"المعرف غير صالح.",
-    "role":"الرتية الوظيفية"
+    "role":"الرتية الوظيفية",
+    "destruction causes":"أسباب الإتلاف",
+    "destructions":"عمليات الإتلاف",
+    "destruction":"عملية الإتلاف"
 }

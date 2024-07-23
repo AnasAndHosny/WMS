@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Destruction;
 
 use App\Http\Responses\Response;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class StoreRoleRequest extends FormRequest
+class StoreDestructionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,16 @@ class StoreRoleRequest extends FormRequest
      */
     public function rules(): array
     {
+        $storedProduct = $this->route('storedProduct');
+
         return [
-            'name' => ['required', 'string', 'unique:roles,name'],
-            'type' => ['required', 'string', 'in:Warehouse,DistributionCenter'],
-            'permissions' => ['present'],
-            'permissions.*' => ['required', 'string', 'exists:permissions,name'],
+            'quantity' => [
+                'required',
+                'integer',
+                'min:1',
+                'max:' . $storedProduct->valid_quantity
+            ],
+            'cause_id' => ['required', 'exists:destruction_causes,id'],
         ];
     }
 

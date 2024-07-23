@@ -234,6 +234,8 @@ return [
         'status_id'             => 'حالة الطلبية',
         'type'                  => 'النوع',
         'permissions'           => 'الصلاحيات',
+        'quantity'              => 'الكمية',
+        'cause_id'              => 'سبب الإتلاف',
     ],
 
 ];

@@ -67,4 +67,9 @@ class DistributionCenter extends Model
     {
         return $this->morphMany(Sale::class, 'salable');
     }
+
+    public function destructions(): MorphMany
+    {
+        return $this->morphMany(Destruction::class, 'destructionable');
+    }
 }

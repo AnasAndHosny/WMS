@@ -12,6 +12,7 @@ use App\Models\SubCategory;
 use App\Models\Manufacturer;
 use App\Models\StoredProduct;
 use App\Http\Responses\Response;
+use App\Models\Destruction;
 use App\Models\DistributionCenter;
 use App\Models\Sale;
 use App\Models\Shipment;
@@ -66,6 +67,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     ShippingCompany::class => 'shipping company',
                     Shipment::class => 'shipment',
                     Sale::class => 'sale',
+                    Destruction::class => 'destruction',
                     default => 'record'
                 };
 

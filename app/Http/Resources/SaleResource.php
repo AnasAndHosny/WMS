@@ -20,7 +20,8 @@ class SaleResource extends JsonResource
             'buyer_name' => $this->buyer_name,
             'total_price' => (float)$this->total_price,
             'saled_at' => $this->created_at,
-            'saled_by' => $this->user->name,
+            'saled_by_image' => $this->user->image,
+            'saled_by_name' => $this->user->name,
             'products' => OrderedProductResource::collection($this->whenLoaded('salesProducts')),
         ];
     }

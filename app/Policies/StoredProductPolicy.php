@@ -2,65 +2,43 @@
 
 namespace App\Policies;
 
-use App\Models\StoredProduct;
 use App\Models\User;
+use App\Models\StoredProduct;
+use App\Helpers\ExceptionHelper;
+use App\Models\Warehouse;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Gate;
 
 class StoredProductPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, StoredProduct $storedProduct): bool
+    public function view(User $user, StoredProduct $storedProduct)
     {
-        //
+        $userEmployable = $user->employee->employable;
+        $productStorable = $storedProduct->storable;
+
+        if ($user->can('product.show') && ($productStorable == $userEmployable))
+            return Response::allow();
+
+        if ($user->can('warehouses.product.index') && (get_class($productStorable) == Warehouse::class))
+            return Response::allow();
+
+        if ($user->can('warehouse.product.index') && ($productStorable == $userEmployable->warehouse))
+            return Response::allow();
+
+        ExceptionHelper::throwModelNotFound($storedProduct);
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can destruct the product.
      */
-    public function create(User $user): bool
+    public function destruct(User $user, StoredProduct $storedProduct): Response
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, StoredProduct $storedProduct): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, StoredProduct $storedProduct): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, StoredProduct $storedProduct): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, StoredProduct $storedProduct): bool
-    {
-        //
+        Gate::allows('view', $storedProduct);
+        return ($user->can('destruction.store') && ($storedProduct->storable == $user->employee->employable))
+            ? Response::allow()
+            : Response::deny();
     }
 }

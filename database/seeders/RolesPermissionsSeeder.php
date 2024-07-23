@@ -38,7 +38,8 @@ class RolesPermissionsSeeder extends Seeder
             'orders.index', 'orders.buy.store', 'orders.manufacturer.store', 'orders.show', 'orders.sell.update', 'orders.buy.update', 'orders.own.update',
             'shippingCompany.index', 'shippingCompany.store', 'shippingCompany.show', 'shippingCompany.update',
             'shipment.index', 'shipment.store', 'shipment.show',
-            'role.index', 'role.store'
+            'role.index', 'role.store',
+            'destruction.index', 'destruction.store', 'destruction.show',
         ];
 
         // Create permissions
@@ -56,6 +57,7 @@ class RolesPermissionsSeeder extends Seeder
             'orders.index', 'orders.buy.store', 'orders.manufacturer.store', 'orders.show', 'orders.sell.update', 'orders.buy.update', 'orders.own.update',
             'shippingCompany.index', 'shippingCompany.show',
             'shipment.index', 'shipment.store', 'shipment.show',
+            'destruction.index', 'destruction.store', 'destruction.show',
         ];
 
         // Create permissions
@@ -69,7 +71,8 @@ class RolesPermissionsSeeder extends Seeder
             'warehouse.own.show', 'warehouse.product.index',
             'product.index', 'product.show', 'product.min.update', 'product.stored.update',
             'orders.index', 'orders.buy.store', 'orders.show', 'orders.buy.update', 'orders.own.update',
-            'sale.index', 'sale.store', 'sale.show'
+            'sale.index', 'sale.store', 'sale.show',
+            'destruction.index', 'destruction.store', 'destruction.show',
         ];
 
         // Create permissions
