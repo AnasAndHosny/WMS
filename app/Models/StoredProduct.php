@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Scope;
 
 class StoredProduct extends Model
 {
@@ -26,7 +28,8 @@ class StoredProduct extends Model
     {
         // Apply the query condition
         return $query->where('active', true)
-            ->where('valid_quantity', '!=', 0);
+            ->where('valid_quantity', '!=', 0)
+            ->valid();
     }
 
     /**
@@ -40,5 +43,34 @@ class StoredProduct extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function scopeValid($query)
+    {
+        return $query->where('expiration_date', '>', Carbon::today()->endOfDay());
+    }
+    public function scopeExpired($query)
+    {
+        return $query->where('expiration_date', '<=', Carbon::today()->endOfDay());
+    }
+
+    public function scopeExpireBefore($query, $date)
+    {
+        return $query->where('expiration_date', '<=', Carbon::parse($date));
+    }
+
+    public function scopeExpireAfter($query, $date)
+    {
+        return $query->where('expiration_date', '>=', Carbon::parse($date));
+    }
+
+    public function scopeQuantityLessThan($query, $quantity)
+    {
+        return $query->where('valid_quantity', '<=', $quantity);
+    }
+
+    public function scopeQuantityMoreThan($query, $quantity)
+    {
+        return $query->where('valid_quantity', '>=', $quantity);
     }
 }

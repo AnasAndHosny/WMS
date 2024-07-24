@@ -4,15 +4,17 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\EmployableProduct;
+use App\Queries\ProductsListQuery;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductCollection;
 
 class ProductService
 {
-    public function index(): array
+    public function index($request): array
     {
-        $product = new ProductCollection(Product::paginate());
+        $product = new ProductsListQuery(Product::query(), $request);
+        $product = new ProductCollection($product->paginate());
         $message = __('messages.index_success', ['class' => __('products')]);
         $code = 200;
         return ['product' => $product, 'message' => $message, 'code' => $code];

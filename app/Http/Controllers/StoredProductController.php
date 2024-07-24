@@ -9,6 +9,7 @@ use App\Models\StoredProduct;
 use App\Models\Warehouse;
 use App\Services\StoredProductService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class StoredProductController extends Controller
@@ -23,11 +24,11 @@ class StoredProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->storedProductService->index();
+            $data = $this->storedProductService->index($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -35,11 +36,11 @@ class StoredProductController extends Controller
         }
     }
 
-    public function warehousesProductList(Warehouse $warehouse): JsonResponse
+    public function warehousesProductList(Request $request, Warehouse $warehouse): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->storedProductService->warehousesProductList($warehouse);
+            $data = $this->storedProductService->warehousesProductList($request, $warehouse);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -47,11 +48,11 @@ class StoredProductController extends Controller
         }
     }
 
-    public function warehouseProductList(): JsonResponse
+    public function warehouseProductList(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->storedProductService->warehouseProductList();
+            $data = $this->storedProductService->warehouseProductList($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

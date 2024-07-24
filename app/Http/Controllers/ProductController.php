@@ -9,6 +9,7 @@ use App\Http\Responses\Response;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class ProductController extends Controller
@@ -23,11 +24,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->productService->index();
+            $data = $this->productService->index($request);
             return Response::Success($data['product'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

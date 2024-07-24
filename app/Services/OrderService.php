@@ -2,24 +2,24 @@
 
 namespace App\Services;
 
-use App\Http\Resources\OrderCollection;
-use App\Http\Resources\OrderResource;
-use App\Models\EmployableProduct;
-use App\Models\Manufacturer;
 use App\Models\Order;
-use App\Models\OrderedProduct;
-use App\Models\OrderStatus;
-use App\Models\StoredProduct;
 use App\Models\Warehouse;
-use App\Queries\OrderListQuery;
-use Illuminate\Support\Facades\Auth;
+use App\Models\OrderStatus;
+use App\Models\Manufacturer;
+use App\Models\StoredProduct;
+use App\Models\OrderedProduct;
+use App\Queries\OrdersListQuery;
+use App\Models\EmployableProduct;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrderCollection;
 
 class OrderService
 {
     public function buyOrdersList($request): array
     {
-        $buyOrders = new OrderListQuery(Auth::user()->buyOrders(), $request, false);
+        $buyOrders = new OrdersListQuery(Auth::user()->buyOrders(), $request, false);
 
         $buyOrders = new OrderCollection($buyOrders->paginate());
         $message = __('messages.index_success', ['class' => __('buy orders')]);
@@ -29,7 +29,7 @@ class OrderService
 
     public function sellOrdersList($request): array
     {
-        $sellOrders = new OrderListQuery(Auth::user()->sellOrders(), $request);
+        $sellOrders = new OrdersListQuery(Auth::user()->sellOrders(), $request);
 
         $sellOrders = new OrderCollection($sellOrders->paginate());
         $message = __('messages.index_success', ['class' => __('sell orders')]);
@@ -39,7 +39,7 @@ class OrderService
 
     public function manufacturerOrdersList($request): array
     {
-        $manufacturerOrders = new OrderListQuery(Auth::user()->manufacturerOrders(), $request, false);
+        $manufacturerOrders = new OrdersListQuery(Auth::user()->manufacturerOrders(), $request, false);
 
         $manufacturerOrders = new OrderCollection($manufacturerOrders->paginate());
         $message = __('messages.index_success', ['class' => __('manufacturer orders')]);

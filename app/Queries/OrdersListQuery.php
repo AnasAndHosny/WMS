@@ -6,7 +6,7 @@ use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class OrderListQuery extends QueryBuilder
+class OrdersListQuery extends QueryBuilder
 {
     public function __construct($orders, $request, bool $sellOrders = true)
     {
@@ -40,7 +40,7 @@ class OrderListQuery extends QueryBuilder
                 AllowedFilter::exact('id'),
                 AllowedFilter::partial('date', 'created_at'),
                 AllowedFilter::exact('cost', 'total_cost'),
-                AllowedFilter::scope('ordered_befor'),
+                AllowedFilter::scope('ordered_before'),
                 AllowedFilter::scope('ordered_after'),
                 AllowedFilter::scope('cheaper_than'),
                 AllowedFilter::scope('more_expensive_than'),
@@ -60,16 +60,16 @@ class OrderListQuery extends QueryBuilder
         // Filter by status
         $this->when($request->has('filter.status'), function ($query) use ($request) {
             $query->withWhereHas('status', function ($query) use ($request) {
-                $query->where('name_en', 'like', $request->input('filter.status'))
-                    ->orWhere('name_ar', 'like', $request->input('filter.status'));
+                $query->where('name_en', 'like', '%' . $request->input('filter.status') . '%')
+                    ->orWhere('name_ar', 'like', '%' . $request->input('filter.status') . '%');
             });
         });
 
         // Filter by name
         $this->when($request->has('filter.name'), function ($query) use ($request, $morphTo) {
             $query->whereHasMorph($morphTo, '*', function ($query) use ($request) {
-                $query->where('name_en', 'like', $request->input('filter.name'))
-                    ->orWhere('name_ar', 'like', $request->input('filter.name'));
+                $query->where('name_en', 'like', '%' . $request->input('filter.name') . '%')
+                    ->orWhere('name_ar', 'like', '%' . $request->input('filter.name') . '%');
             });
         });
 

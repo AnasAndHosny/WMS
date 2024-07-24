@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Warehouse;
 use App\Models\StoredProduct;
 use App\Helpers\ExceptionHelper;
-use App\Models\Warehouse;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
 
@@ -22,10 +23,20 @@ class StoredProductPolicy
         if ($user->can('product.show') && ($productStorable == $userEmployable))
             return Response::allow();
 
-        if ($user->can('warehouses.product.index') && (get_class($productStorable) == Warehouse::class))
+        if (
+            $user->can('warehouses.product.index')
+            && (get_class($productStorable) == Warehouse::class)
+            && ($storedProduct->active == true)
+            && (Carbon::createFromDate($storedProduct->expiration_date) > Carbon::today()->endOfDay())
+        )
             return Response::allow();
 
-        if ($user->can('warehouse.product.index') && ($productStorable == $userEmployable->warehouse))
+        if (
+            $user->can('warehouse.product.index')
+            && ($productStorable == $userEmployable->warehouse)
+            && ($storedProduct->active == true)
+            && (Carbon::createFromDate($storedProduct->expiration_date) > Carbon::today()->endOfDay())
+        )
             return Response::allow();
 
         ExceptionHelper::throwModelNotFound($storedProduct);

@@ -2,38 +2,55 @@
 
 namespace App\Services;
 
-use App\Http\Resources\StoredProductCollection;
-use App\Http\Resources\StoredProductResource;
-use App\Models\StoredProduct;
 use App\Models\Warehouse;
+use App\Models\StoredProduct;
 use Illuminate\Support\Facades\Auth;
+use App\Queries\StoredProductsListQuery;
+use App\Http\Resources\StoredProductResource;
+use App\Http\Resources\StoredProductCollection;
 
 class StoredProductService
 {
-    public function index(): array
+    public function index($request): array
     {
-        $products = Auth::user()->employee->employable->storedProducts()->paginate();
-        $products = new StoredProductCollection($products);
+        $products = new StoredProductsListQuery(
+            Auth::user()->employee->employable
+                ->storedProducts()
+                ->where('valid_quantity', '!=', 0),
+            $request
+        );
+
+        $products = new StoredProductCollection($products->paginate());
         $message = __('messages.index_success', ['class' => __('products')]);
         $code = 200;
         return ['data' => $products, 'message' => $message, 'code' => $code];
     }
 
-    public function warehousesProductList(Warehouse $warehouse): array
+    public function warehousesProductList($request, Warehouse $warehouse): array
     {
-        $products = $warehouse->storedProducts()->active()->paginate();
-        $products = new StoredProductCollection($products);
+        $products = new StoredProductsListQuery(
+            $warehouse->storedProducts()->active(),
+            $request,
+            false
+        );
+
+        $products = new StoredProductCollection($products->paginate());
         $message = __('messages.index_success', ['class' => __('products')]);
         $code = 200;
         return ['data' => $products, 'message' => $message, 'code' => $code];
     }
 
-    public function warehouseProductList(): array
+    public function warehouseProductList($request): array
     {
         $warehouse = Auth::user()->employee->employable->warehouse;
 
-        $products = $warehouse->storedProducts()->active()->paginate();
-        $products = new StoredProductCollection($products);
+        $products = new StoredProductsListQuery(
+            $warehouse->storedProducts()->active(),
+            $request,
+            false
+        );
+
+        $products = new StoredProductCollection($products->paginate());
         $message = __('messages.index_success', ['class' => __('products')]);
         $code = 200;
         return ['data' => $products, 'message' => $message, 'code' => $code];

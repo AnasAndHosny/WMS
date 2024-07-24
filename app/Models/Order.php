@@ -57,7 +57,7 @@ class Order extends Model
         );
     }
 
-    public function scopeOrderedBefor($query, $date)
+    public function scopeOrderedBefore($query, $date)
     {
         return $query->where('created_at', '<=', Carbon::parse($date));
     }
