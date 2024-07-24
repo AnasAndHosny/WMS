@@ -8,9 +8,10 @@ use App\Http\Responses\Response;
 use App\Services\EmployeeService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Employee\BanEmployeeRequest;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
-use App\Http\Requests\Employee\UpdateEmployeeProfileRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
+use App\Http\Requests\Employee\UpdateEmployeeProfileRequest;
 
 class EmployeeController extends Controller
 {
@@ -105,11 +106,27 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Employee $employee)
+    public function ban(Employee $employee, BanEmployeeRequest $request): JsonResponse
     {
-        //
+        $data = [];
+        try {
+            $data = $this->employeeService->ban($employee, $request);
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
+
+    public function unban(Employee $employee): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->employeeService->unban($employee);
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
     }
 }

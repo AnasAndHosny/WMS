@@ -30,7 +30,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout')->middleware('auth:sanctum');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'auth.banned'])->group(function () {
     Route::prefix('user')->controller(AuthController::class)->group(function () {
         Route::get('profile', 'showProfile');
         Route::patch('profile', 'updateProfile');
@@ -87,6 +87,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::patch('profile', 'updateProfile');
         Route::get('{employee}', 'show')->middleware('can:employee.show');
         Route::patch('{employee}', 'update')->middleware('can:employee.update');
+        Route::get('{employee}/ban', 'ban')->middleware('can:employee.ban');
+        Route::delete('{employee}/ban', 'unban')->middleware('can:employee.ban');
     });
 
     Route::prefix('manufacturer')->controller(ManufacturerController::class)->group(function () {

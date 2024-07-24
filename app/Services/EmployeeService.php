@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\EmployeeCollection;
-use Illuminate\Support\Facades\Auth;
 
 class EmployeeService
 {
@@ -143,6 +144,33 @@ class EmployeeService
 
         $employee = new EmployeeResource($employee);
         $message = __('messages.update_success', ['class' => __('employee')]);
+        $code = 200;
+        return ['data' => $employee, 'message' => $message, 'code' => $code];
+    }
+
+    public function ban(Employee $employee, $request): array
+    {
+        $user = $employee->user;
+        if ($user->isNotBanned()) {
+            $user->ban([
+                'expired_at' => $request['expired_at'] ? Carbon::parse($request['expired_at']) : null
+            ]);
+            $message = __('Employee account has been banned successfully.');
+        } else {
+            $message = __('The employee account has already been banned.');
+        }
+
+        $employee = new EmployeeResource(Employee::find($employee->id));
+        $code = 200;
+        return ['data' => $employee, 'message' => $message, 'code' => $code];
+    }
+
+    public function unban(Employee $employee): array
+    {
+        $employee->user->unban();
+
+        $employee = new EmployeeResource($employee);
+        $message = __('Employee account has been unbanned successfully.');
         $code = 200;
         return ['data' => $employee, 'message' => $message, 'code' => $code];
     }

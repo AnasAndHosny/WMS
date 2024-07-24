@@ -10,6 +10,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.9",
+        "mchev/banhammer": "^2.3",
         "spatie/laravel-permission": "^6.7",
         "spatie/laravel-query-builder": "^6.0",
         "thiagoprz/eloquent-composite-key": "^1.0"

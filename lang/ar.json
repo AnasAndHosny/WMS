@@ -89,5 +89,8 @@
     "destruction":"عملية الإتلاف",
     "You are a warehouse manager now.":"أنت مدير مستودع الآن.",
     "You are a distribution center manager now.":"أنت مدير مركز توزيع الآن.",
-    "You are a general manager now.":"أنت مدير عام الآن."
+    "You are a general manager now.":"أنت مدير عام الآن.",
+    "Employee account has been banned successfully.":"تم حظر حساب الموظف بنجاح.",
+    "The employee account has already been banned.":"إن حساب الموظف محظور مسبقاً.",
+    "Employee account has been unbanned successfully.":"تم إلغاء حظر حساب الموظف بنجاح."
 }

@@ -36,6 +36,8 @@ class EmployeeResource extends JsonResource
             'employable' => $this->employable->name,
             'employable_type' => $this->employable_type,
             'employable_id' => $this->employable_id,
+            'is_banned' => $this->when($request->user()->can('employee.ban'), $user->isBanned()),
+            'ban_expired_at' => $user->bans()->latest()->first()->expired_at ?? null
         ];
     }
 }
