@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('user')->controller(AuthController::class)->group(function () {
         Route::get('profile', 'showProfile');
         Route::patch('profile', 'updateProfile');
+        Route::get('back-admin', 'backAdmin')->middleware('can:manager.continue');
     });
 
     Route::prefix('categories')->controller(CategoryController::class)->group(function () {
@@ -60,6 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('distribution-centers', 'showDistributionCenters')->middleware('can:warehouse.centers.index');
         Route::get('{warehouse}', 'show')->middleware('can:warehouse.show');
         Route::patch('{warehouse}', 'update')->middleware('can:warehouse.update');
+        Route::get('{warehouse}/continue', 'continueManager')->middleware('can:manager.continue');
     });
 
     Route::prefix('distribution-center')->controller(DistributionCenterController::class)->group(function () {
@@ -67,6 +69,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', 'store')->middleware('can:center.store');
         Route::get('{distributionCenter}', 'show')->middleware('can:view,distributionCenter');
         Route::patch('{distributionCenter}', 'update')->middleware('can:center.update');
+        Route::get('{distributionCenter}/continue', 'continueManager')->middleware('can:manager.continue');
     });
 
     Route::prefix('products')->controller(ProductController::class)->group(function () {

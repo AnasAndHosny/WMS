@@ -133,4 +133,16 @@ class UserService
         $code = 200;
         return ['data' => $employee, 'message' => $message, 'code' => $code];
     }
+
+    public function backAdmin(): array
+    {
+
+        $user = Auth::user();
+        $user->employee()->delete();
+
+        $user = new UserResource($user);
+        $message = __('You are a general manager now.');
+        $code = 200;
+        return ['data' => $user, 'message' => $message, 'code' => $code];
+    }
 }

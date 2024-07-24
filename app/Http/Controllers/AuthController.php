@@ -78,4 +78,16 @@ class AuthController extends Controller
             return Response::Error($data, $message);
         }
     }
+
+    public function backAdmin(): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->userService->backAdmin();
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
 }

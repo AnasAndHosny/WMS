@@ -86,5 +86,8 @@
     "role":"الرتية الوظيفية",
     "destruction causes":"أسباب الإتلاف",
     "destructions":"عمليات الإتلاف",
-    "destruction":"عملية الإتلاف"
+    "destruction":"عملية الإتلاف",
+    "You are a warehouse manager now.":"أنت مدير مستودع الآن.",
+    "You are a distribution center manager now.":"أنت مدير مركز توزيع الآن.",
+    "You are a general manager now.":"أنت مدير عام الآن."
 }

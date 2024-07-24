@@ -90,4 +90,16 @@ class WarehouseController extends Controller
             return Response::Error($data, $message);
         }
     }
+
+    public function continueManager(Warehouse $warehouse): JsonResponse
+    {
+        $data = [];
+        try {
+            $data = $this->warehouseService->continueManager($warehouse);
+            return Response::Success($data['data'], $data['message'], $data['code']);
+        } catch (Throwable $th) {
+            $message = $th->getMessage();
+            return Response::Error($data, $message);
+        }
+    }
 }

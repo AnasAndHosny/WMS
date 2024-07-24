@@ -40,6 +40,7 @@ class RolesPermissionsSeeder extends Seeder
             'shipment.index', 'shipment.store', 'shipment.show',
             'role.index', 'role.store',
             'destruction.index', 'destruction.store', 'destruction.show',
+            'manager.continue'
         ];
 
         // Create permissions
