@@ -88,7 +88,7 @@ class DistributionCenterService
         ]);
 
         $distributionCenter = new DistributionCenterResource($distributionCenter);
-        $message = __('You are a warehouse manager now.');
+        $message = __('You are a distribution center manager now.');
         $code = 200;
         return ['data' => $distributionCenter, 'message' => $message, 'code' => $code];
     }

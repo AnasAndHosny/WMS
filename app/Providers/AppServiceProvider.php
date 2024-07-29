@@ -22,5 +22,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('updateBuy-order', [OrderPolicy::class, 'updateBuy']);
+
+        Gate::define("view-mailweb", function ($user = null) {
+            return true;
+        });
     }
 }

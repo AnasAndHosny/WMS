@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
@@ -12,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\DestructionController;
 use App\Http\Controllers\SubCategoryController;
@@ -19,7 +19,10 @@ use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\StoredProductController;
 use App\Http\Controllers\ShippingCompanyController;
 use App\Http\Controllers\DestructionCauseController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\DistributionCenterController;
+use App\Http\Controllers\Auth\ForgetPasswordController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -28,6 +31,13 @@ Route::get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::get('logout', 'logout')->middleware('auth:sanctum');
+});
+
+Route::prefix('otp')->group(function () {
+    Route::get('email-verification', [EmailVerificationController::class, 'sendEmailVerification'])->middleware('auth:sanctum');
+    Route::post('email-verification', [EmailVerificationController::class, 'emailVerification'])->middleware('auth:sanctum');
+    Route::post('password/forget-password', [ForgetPasswordController::class, 'forgetPassword']);
+    Route::post('password/reset', [ResetPasswordController::class, 'passwordReset']);
 });
 
 Route::middleware(['auth:sanctum', 'auth.banned'])->group(function () {

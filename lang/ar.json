@@ -92,5 +92,17 @@
     "You are a general manager now.":"أنت مدير عام الآن.",
     "Employee account has been banned successfully.":"تم حظر حساب الموظف بنجاح.",
     "The employee account has already been banned.":"إن حساب الموظف محظور مسبقاً.",
-    "Employee account has been unbanned successfully.":"تم إلغاء حظر حساب الموظف بنجاح."
+    "Employee account has been unbanned successfully.":"تم إلغاء حظر حساب الموظف بنجاح.",
+    "Verification Needed":"بحاجة إلى توثيق حسابك",
+    "Use the below code for verification process":"استخدم الرمز الآتي لإكمال عملية التوثيق",
+    "Password resetting":"إعادة تعيين كلمة المرور",
+    "Use the below code for resetting your password":"استخدم الرمز الآتي لإعادة تعيين كلمة المرور",
+    "Your email is already verified.":"إن بريدك الإلكتروني موثق بالفعل.",
+    "The verification code has been sent successfully to your email.":"تم إرسال رمز التوثيق إلى بريدك الإلكتروني بنجاح.",
+    "OTP does not exist":"رمز المرور لمرة واحدة غير موجود",
+    "OTP is not valid":"رمز المرور لمرة واحدة غير صالح",
+    "OTP Expired":"رمز المرور لمرة واحدة منتهي الصلاحية",
+    "Your email has been verified successfully.":"تم توثيق بريدك الإلكتروني بنجاح.",
+    "The resetting password code has been sent successfully to your email.":"تم إرسال رمز إعادة تعيين كلمة المرور إلى بريدك الإلكتروني بنجاح.",
+    "Your password has been reset successfully.":"تم إعادة تعيين كلمة المرور الخاصة بك بنجاح."
 }

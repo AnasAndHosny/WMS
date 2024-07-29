@@ -12,3 +12,5 @@ Artisan::command('inspire', function () {
 Schedule::call(function () {
     Banhammer::unbanExpired();
 })->daily();
+
+Schedule::command('otp:clean')->daily();

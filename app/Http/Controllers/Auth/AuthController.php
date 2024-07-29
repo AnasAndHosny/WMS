@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\Auth\UpdateUserProfileRequest;
+use Throwable;
+use App\Services\UserService;
+use App\Http\Responses\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UserSigninRequest;
 use App\Http\Requests\Auth\UserSignupRequest;
-use App\Http\Responses\Response;
-use App\Services\UserService;
-use Illuminate\Http\JsonResponse;
-use Throwable;
+use App\Http\Requests\Auth\UpdateUserProfileRequest;
 
 class AuthController extends Controller
 {
