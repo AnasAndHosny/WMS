@@ -40,7 +40,7 @@ Route::prefix('otp')->group(function () {
     Route::post('password/reset', [ResetPasswordController::class, 'passwordReset']);
 });
 
-Route::middleware(['auth:sanctum', 'auth.banned'])->group(function () {
+Route::middleware(['auth:sanctum', 'user.banned', 'user.verified'])->group(function () {
     Route::prefix('user')->controller(AuthController::class)->group(function () {
         Route::get('profile', 'showProfile');
         Route::patch('profile', 'updateProfile');

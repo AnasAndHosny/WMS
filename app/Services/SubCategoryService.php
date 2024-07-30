@@ -6,12 +6,14 @@ use App\Http\Resources\ProductCollection;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Product;
 use App\Models\SubCategory;
+use App\Queries\SubCategoriesListQuery;
 
 class SubCategoryService
 {
-    public function index(): array
+    public function index($request): array
     {
-        $category = SubCategoryResource::collection(SubCategory::all());
+        $category = new SubCategoriesListQuery(SubCategory::query(), $request);
+        $category = SubCategoryResource::collection($category->get());
         $message = __('messages.index_success', ['class' => __('Categories')]);
         $code = 200;
         return ['category' => $category, 'message' => $message, 'code' => $code];

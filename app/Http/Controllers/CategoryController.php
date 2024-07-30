@@ -8,6 +8,7 @@ use App\Http\Responses\Response;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class CategoryController extends Controller
@@ -22,11 +23,11 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->categoryService->index();
+            $data = $this->categoryService->index($request);
             return Response::Success($data['category'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -82,11 +83,11 @@ class CategoryController extends Controller
     /**
      * Display a listing of the sub-categories from specific Category.
      */
-    public function subCategoriesList(Category $category): JsonResponse
+    public function subCategoriesList(Request $request, Category $category): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->categoryService->subCategoriesList($category);
+            $data = $this->categoryService->subCategoriesList($request, $category);
             return Response::Success($data['category'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

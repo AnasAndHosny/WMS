@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\SaleResource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\SaleCollection;
+use App\Queries\SalesListQuery;
 
 class SaleService
 {
-    public function index(): array
+    public function index($request): array
     {
-        $sales = Auth::user()->sales()
-            ->orderBy('id', 'Desc')->paginate();
+        $sales = new SalesListQuery(Auth::user()->sales(), $request);
 
-        $sales = new SaleCollection($sales);
+        $sales = new SaleCollection($sales->paginate());
         $message = __('messages.index_success', ['class' => __('sales')]);
         $code = 200;
         return ['data' => $sales, 'message' => $message, 'code' => $code];

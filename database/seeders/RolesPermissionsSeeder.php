@@ -39,6 +39,7 @@ class RolesPermissionsSeeder extends Seeder
             'shippingCompany.index', 'shippingCompany.store', 'shippingCompany.show', 'shippingCompany.update',
             'shipment.index', 'shipment.store', 'shipment.show',
             'role.index', 'role.store',
+            'sale.index', 'sale.store', 'sale.show',
             'destruction.index', 'destruction.store', 'destruction.show',
             'manager.continue',
             'employee.ban',

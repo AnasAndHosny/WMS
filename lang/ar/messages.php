@@ -9,4 +9,6 @@ return [
     'update_success'                => 'تم تحديث :class بنجاح.',
     'update_order_status_failed'    => 'عذراً، لا يمكنك تحديث حالة الطلبية لأنها :status.',
     'update_order_failed'           => 'عذراً، لا يمكنك تحديث الطلبية لأنها :status.',
+    'banned'                        => 'عذراً, تم حظر حسابك.',
+    'notVerified'                   => 'يرجى توثيق بريدك الإلكتروني.',
 ];

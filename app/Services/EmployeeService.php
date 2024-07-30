@@ -6,16 +6,19 @@ use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Employee;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Queries\EmployeesListQuery;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\EmployeeCollection;
 
 class EmployeeService
 {
-    public function index(): array
+    public function index(Request $request): array
     {
-        $employee = new EmployeeCollection(Employee::nonAdmin()->paginate());
+        $employee = new EmployeesListQuery(Employee::nonAdmin(), $request);
+        $employee = new EmployeeCollection($employee->paginate());
         $message = __('messages.index_success', ['class' => __('employees')]);
         $code = 200;
         return ['data' => $employee, 'message' => $message, 'code' => $code];

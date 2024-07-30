@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Throwable;
+use App\Models\Warehouse;
+use Illuminate\Http\Request;
+use App\Http\Responses\Response;
+use Illuminate\Http\JsonResponse;
+use App\Services\WarehouseService;
 use App\Http\Requests\Warehouse\StoreWarehouseRequest;
 use App\Http\Requests\Warehouse\UpdateWarehouseRequest;
-use App\Http\Responses\Response;
-use App\Models\Warehouse;
-use App\Services\WarehouseService;
-use Illuminate\Http\JsonResponse;
-use Throwable;
 
 class WarehouseController extends Controller
 {
@@ -22,11 +23,11 @@ class WarehouseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->warehouseService->index();
+            $data = $this->warehouseService->index($request);
             return Response::Success($data['warehouse'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();
@@ -79,11 +80,11 @@ class WarehouseController extends Controller
         }
     }
 
-    public function showDistributionCenters(): JsonResponse
+    public function showDistributionCenters(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->warehouseService->showDistributionCenters();
+            $data = $this->warehouseService->showDistributionCenters($request);
             return Response::Success($data['distributionCenter'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

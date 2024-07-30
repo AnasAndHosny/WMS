@@ -8,6 +8,7 @@ use App\Http\Responses\Response;
 use App\Models\DistributionCenter;
 use App\Services\DistributionCenterService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class DistributionCenterController extends Controller
@@ -22,11 +23,11 @@ class DistributionCenterController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->distributionCenterService->index();
+            $data = $this->distributionCenterService->index($request);
             return Response::Success($data['distributionCenter'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

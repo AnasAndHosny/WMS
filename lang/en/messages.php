@@ -9,4 +9,6 @@ return [
     'update_success'                => ':Class updated successfully.',
     'update_order_status_failed'    => 'Sorry, you cannot update the order status because it\'s been :status.',
     'update_order_failed'           => 'Sorry, you cannot update the order because it\'s been :status.',
+    'banned'                        => 'Sorry, your account has been banned.',
+    'notVerified'                   => 'Please verify your email.',
 ];

@@ -4,16 +4,18 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\State;
-use App\Models\Employee;
+use Illuminate\Http\Request;
 use App\Models\DistributionCenter;
 use Illuminate\Support\Facades\Auth;
+use App\Queries\DistributionCentersListQuery;
 use App\Http\Resources\DistributionCenterResource;
 
 class DistributionCenterService
 {
-    public function index(): array
+    public function index(Request $request): array
     {
-        $distributionCenter = DistributionCenterResource::collection(DistributionCenter::all());
+        $distributionCenter = new DistributionCentersListQuery(DistributionCenter::query(), $request);
+        $distributionCenter = DistributionCenterResource::collection($distributionCenter->get());
         $message = __('messages.index_success', ['class' => __('distribution centers')]);
         $code = 200;
         return ['distributionCenter' => $distributionCenter, 'message' => $message, 'code' => $code];

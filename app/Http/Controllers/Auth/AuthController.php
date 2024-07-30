@@ -37,6 +37,16 @@ class AuthController extends Controller
         $data = [];
         try {
             $data = $this->userService->login($request);
+            $user = $data['user'];
+
+            if ($user->isBanned()) {
+                $user->tokens()->delete();
+                $data = [
+                    'error' => 'Banned'
+                ];
+                return Response::Error($data, __('messages.banned'), 403);
+            }
+
             return Response::Success($data['user'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

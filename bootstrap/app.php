@@ -36,6 +36,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'user.banned' => \App\Http\Middleware\UserBanned::class,
+            'user.verified' => \App\Http\Middleware\UserVerified::class,
         ]);
 
         $middleware->api(prepend: [
@@ -46,7 +48,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // handle NotAuthorized exceptions from api requests and send JsonResponse
         $exceptions->render(function (AccessDeniedHttpException $e, $request) {
             if ($request->is('api/*')) {
-                return Response::Error([], __('messages.notAuthorized'), 403);
+                return Response::Error(['error' => 'Not Authorized'], __('messages.notAuthorized'), 403);
             }
         });
 

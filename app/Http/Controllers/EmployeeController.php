@@ -12,6 +12,7 @@ use App\Http\Requests\Employee\BanEmployeeRequest;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeProfileRequest;
+use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -25,11 +26,11 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->employeeService->index();
+            $data = $this->employeeService->index($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

@@ -6,12 +6,15 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\SubCategoryCollection;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Queries\CategoriesListQuery;
+use App\Queries\SubCategoriesListQuery;
 
 class CategoryService
 {
-    public function index(): array
+    public function index($request): array
     {
-        $category = CategoryResource::collection(Category::all());
+        $category = new CategoriesListQuery(Category::query(), $request);
+        $category = CategoryResource::collection($category->get());
         $message = __('messages.index_success', ['class' => __('Categories')]);
         $code = 200;
         return ['category' => $category, 'message' => $message, 'code' => $code];
@@ -51,10 +54,11 @@ class CategoryService
         return ['category' => $category, 'message' => $message, 'code' => $code];
     }
 
-    public function subCategoriesList(Category $category): array
+    public function subCategoriesList($request, Category $category): array
     {
-        $category = SubCategory::where('category_id', $category->id)->paginate();
-        $category = new SubCategoryCollection($category);
+        $category = SubCategory::where('category_id', $category->id);
+        $category = new SubCategoriesListQuery($category, $request);
+        $category = new SubCategoryCollection($category->paginate());
         $message = __('messages.index_success', ['class' => __('Categories')]);
         $code = 200;
         return ['category' => $category, 'message' => $message, 'code' => $code];

@@ -4,17 +4,18 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\State;
-use App\Models\Employee;
 use App\Models\Warehouse;
 use App\Services\ImageService;
 use App\Models\DistributionCenter;
+use App\Queries\WarehousesListQuery;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\WarehouseResource;
+use App\Queries\DistributionCentersListQuery;
 use App\Http\Resources\DistributionCenterResource;
 
 class WarehouseService
 {
-    public function index(): array
+    public function index($request): array
     {
         $employee = Auth::user()->employee;
 
@@ -26,6 +27,7 @@ class WarehouseService
                 ->where('id', '!=', $userWarehouse->id);
         }
 
+        $warehouse = new WarehousesListQuery($query, $request);
         $warehouse = WarehouseResource::collection($query->get());
         $message = __('messages.index_success', ['class' => __('warehouses')]);
         $code = 200;
@@ -76,11 +78,12 @@ class WarehouseService
         return ['warehouse' => $warehouse, 'message' => $message, 'code' => $code];
     }
 
-    public function showDistributionCenters(): array
+    public function showDistributionCenters($request): array
     {
         $warehouse = Auth::user()->employee->employable_id;
 
-        $distributionCenter = DistributionCenterResource::collection(DistributionCenter::where('warehouse_id', $warehouse)->get());
+        $distributionCenter = new DistributionCentersListQuery(DistributionCenter::where('warehouse_id', $warehouse), $request);
+        $distributionCenter = DistributionCenterResource::collection($distributionCenter->get());
         $message = __('messages.index_success', ['class' => __('distribution centers')]);
         $code = 200;
         return ['distributionCenter' => $distributionCenter, 'message' => $message, 'code' => $code];
@@ -103,7 +106,7 @@ class WarehouseService
             'user_id' => $userId,
             'state_id' => State::first()->id,
         ]);
-        
+
         $employee->update([
             'full_name' => 'admin ' . $employee->id,
         ]);
