@@ -99,6 +99,7 @@
     "Use the below code for resetting your password":"استخدم الرمز الآتي لإعادة تعيين كلمة المرور",
     "Your email is already verified.":"إن بريدك الإلكتروني موثق بالفعل.",
     "The verification code has been sent successfully to your email.":"تم إرسال رمز التوثيق إلى بريدك الإلكتروني بنجاح.",
+    "OTP is valid":"رمز المرور لمرة واحدة صالح",
     "OTP does not exist":"رمز المرور لمرة واحدة غير موجود",
     "OTP is not valid":"رمز المرور لمرة واحدة غير صالح",
     "OTP Expired":"رمز المرور لمرة واحدة منتهي الصلاحية",

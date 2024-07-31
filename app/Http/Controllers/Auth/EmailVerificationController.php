@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Responses\Response;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Notifications\EmailVerificationNotifiction;
+use App\Notifications\EmailVerificationNotification;
 use App\Http\Requests\Auth\EmailVerificationRequest;
 
 class EmailVerificationController extends Controller
@@ -31,7 +31,7 @@ class EmailVerificationController extends Controller
         }
 
 
-        $user->notify(new EmailVerificationNotifiction());
+        $user->notify(new EmailVerificationNotification());
         $message = __('Email verification code sent successfully.');
         $code = 200;
         return Response::Success($user, $message, $code);
@@ -40,7 +40,7 @@ class EmailVerificationController extends Controller
     public function emailVerification(EmailVerificationRequest $request): JsonResponse
     {
         $user = $request->user();
-        $otp = $this->otp->validate($user->email, $request->otp);
+        $otp = $this->otp->validate($user->email . '|verify', $request->otp);
 
         if (!$otp->status) {
             return Response::Error($user, __($otp->message), 400);

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
@@ -38,6 +39,7 @@ Route::prefix('otp')->group(function () {
     Route::post('email-verification', [EmailVerificationController::class, 'emailVerification'])->middleware('auth:sanctum');
     Route::post('password/forget-password', [ForgetPasswordController::class, 'forgetPassword']);
     Route::post('password/reset', [ResetPasswordController::class, 'passwordReset']);
+    Route::post('check', [OtpController::class, 'check']);
 });
 
 Route::middleware(['auth:sanctum', 'user.banned', 'user.verified'])->group(function () {
