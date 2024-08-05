@@ -4,15 +4,18 @@ namespace App\Services;
 
 use App\Http\Resources\ShippingCompanyResource;
 use App\Models\ShippingCompany;
+use App\Queries\ShippingCompaniesListQuery;
 
 class ShippingCompanyService
 {
-    public function index(): array
+    public function index($request): array
     {
-        $manufacturer = ShippingCompanyResource::collection(ShippingCompany::all());
+        $shippingCompany = new ShippingCompaniesListQuery(ShippingCompany::query(), $request);
+        
+        $shippingCompany = ShippingCompanyResource::collection($shippingCompany->get());
         $message = __('messages.index_success', ['class' => __('shipping companies')]);
         $code = 200;
-        return ['data' => $manufacturer, 'message' => $message, 'code' => $code];
+        return ['data' => $shippingCompany, 'message' => $message, 'code' => $code];
     }
 
     public function store($request): array

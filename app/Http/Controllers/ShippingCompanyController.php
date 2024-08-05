@@ -8,6 +8,7 @@ use App\Http\Responses\Response;
 use App\Models\ShippingCompany;
 use App\Services\ShippingCompanyService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class ShippingCompanyController extends Controller
@@ -22,11 +23,11 @@ class ShippingCompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->shippingCompanyService->index();
+            $data = $this->shippingCompanyService->index($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

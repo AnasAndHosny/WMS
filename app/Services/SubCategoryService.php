@@ -6,6 +6,7 @@ use App\Http\Resources\ProductCollection;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Product;
 use App\Models\SubCategory;
+use App\Queries\ProductsListQuery;
 use App\Queries\SubCategoriesListQuery;
 
 class SubCategoryService
@@ -59,10 +60,11 @@ class SubCategoryService
         return ['category' => $category, 'message' => $message, 'code' => $code];
     }
 
-    public function productsList(SubCategory $category): array
+    public function productsList($request, SubCategory $category): array
     {
-        $product = Product::where('subcategory_id', $category->id)->paginate();
-        $product = new ProductCollection($product);
+        $product = new ProductsListQuery( Product::where('subcategory_id', $category->id), $request);
+
+        $product = new ProductCollection($product->paginate());
         $message = __('messages.index_success', ['class' => __('products')]);
         $code = 200;
         return ['product' => $product, 'message' => $message, 'code' => $code];

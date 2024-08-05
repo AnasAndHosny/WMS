@@ -4,12 +4,15 @@ namespace App\Services;
 
 use App\Models\Manufacturer;
 use App\Http\Resources\ManufacturerResource;
+use App\Queries\ManufacturersListQuery;
 
 class ManufacturerService
 {
-    public function index(): array
+    public function index($request): array
     {
-        $manufacturer = ManufacturerResource::collection(manufacturer::all());
+        $manufacturer = new ManufacturersListQuery(Manufacturer::query(), $request);
+        
+        $manufacturer = ManufacturerResource::collection($manufacturer->get());
         $message = __('messages.index_success', ['class' => __('manufacturers')]);
         $code = 200;
         return ['data' => $manufacturer, 'message' => $message, 'code' => $code];

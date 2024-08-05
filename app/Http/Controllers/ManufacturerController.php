@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use App\Services\ManufacturerService;
 use App\Http\Requests\Manufacturer\StoreManufacturerRequest;
 use App\Http\Requests\Manufacturer\UpdateManufacturerRequest;
+use Illuminate\Http\Request;
 
 class ManufacturerController extends Controller
 {
@@ -22,11 +23,11 @@ class ManufacturerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $data = [];
         try {
-            $data = $this->manufacturerService->index();
+            $data = $this->manufacturerService->index($request);
             return Response::Success($data['data'], $data['message'], $data['code']);
         } catch (Throwable $th) {
             $message = $th->getMessage();

@@ -68,4 +68,9 @@ class Product extends Model
             ->where('employable_type', $employableType)
             ->where('employable_id', $employable->id);
     }
+
+    public function orderedProducts(): HasMany
+    {
+        return $this->hasMany(OrderedProduct::class);
+    }
 }
