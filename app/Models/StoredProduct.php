@@ -19,6 +19,7 @@ class StoredProduct extends Model
         'product_id',
         'expiration_date',
         'valid_quantity',
+        'expired_quantity',
         'active',
         'max'
     ];

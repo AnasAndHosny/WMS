@@ -30,6 +30,7 @@ class RoleService
         $role = DB::transaction(function () use ($request): Role {
             $role = Role::create([
                 'name' => $request['name'],
+                'guard_name' => 'web',
                 'type' => $request['type']
             ]);
 

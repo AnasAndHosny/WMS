@@ -1,5 +1,8 @@
 <?php
 
+use App\Events\Test;
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OtpController;
@@ -8,21 +11,25 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ShipmentController;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\DestructionController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StoredProductController;
 use App\Http\Controllers\ShippingCompanyController;
 use App\Http\Controllers\DestructionCauseController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\DistributionCenterController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
+use App\Notifications\ProductQuantityWarningNotification;
 use App\Http\Controllers\Auth\EmailVerificationController;
 
 Route::get('/user', function (Request $request) {
@@ -162,6 +169,19 @@ Route::middleware(['auth:sanctum', 'user.banned', 'user.verified'])->group(funct
         Route::get('/', 'index')->middleware('can:destruction.index');
         Route::get('{destruction}', 'show')->middleware('can:view,destruction');
     });
+
+    Route::prefix('reports')->controller(ReportController::class)->group(function () {
+        Route::post('order', 'orderReport');
+        Route::post('order/excel', 'orderReportExcel');
+        Route::post('order/pdf', 'orderReportPdf');
+        Route::post('product', 'productReport');
+        Route::post('product/{product}', 'specificProductReport');
+    });
+
+    Route::prefix('notifications')->controller(NotificationController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('mark-all', 'markAllAsRead');
+    });
 });
 
 Route::prefix('cities')->controller(CityController::class)->group(function () {
@@ -178,4 +198,12 @@ Route::prefix('states')->controller(StateController::class)->group(function () {
 
 Route::prefix('destruction-causes')->controller(DestructionCauseController::class)->group(function () {
     Route::get('/', 'index');
+});
+
+Route::get('/test/realtime', function () {
+    return event(new Test());
+});
+
+Route::get('/test/notifications', function () {
+    return Notification::send(User::all(), new ProductQuantityWarningNotification(Product::find(1)));
 });

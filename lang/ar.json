@@ -105,5 +105,6 @@
     "OTP Expired":"رمز المرور لمرة واحدة منتهي الصلاحية",
     "Your email has been verified successfully.":"تم توثيق بريدك الإلكتروني بنجاح.",
     "The resetting password code has been sent successfully to your email.":"تم إرسال رمز إعادة تعيين كلمة المرور إلى بريدك الإلكتروني بنجاح.",
-    "Your password has been reset successfully.":"تم إعادة تعيين كلمة المرور الخاصة بك بنجاح."
+    "Your password has been reset successfully.":"تم إعادة تعيين كلمة المرور الخاصة بك بنجاح.",
+    "notifications":"الإشعارات"
 }

@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Order;
+namespace App\Http\Requests\Report;
 
 use App\Http\Responses\Response;
-use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class StoreManufacturerOrderRequest extends FormRequest
+class OrderReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +25,10 @@ class StoreManufacturerOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'manufacturer_id' => ['required', 'exists:manufacturers,id'],
-            'shipping_cost' => ['required', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
-            'products' => ['array', 'present'],
-            'products.*.id' => ['required', 'exists:products,id'],
-            'products.*.quantity' => ['required', 'integer', 'min:1'],
-            'products.*.cost' => ['required', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
-            'products.*.exp' => ['nullable', 'date_format:Y-m-d'],
+            'start_date' => ['date'],
+            'end_date' => ['date'],
+            'frequency' => ['in:daily,weekly,monthly,yearly'],
+            'type' => ['required', 'in:buy,sell'],
         ];
     }
 

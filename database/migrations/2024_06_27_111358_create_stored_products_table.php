@@ -21,7 +21,9 @@ return new class extends Migration
             $table->date('expiration_date')
                 ->nullable()
                 ->default(null);
-            $table->unsignedInteger('valid_quantity')->default(0);            $table->boolean('active')->default(false);
+            $table->unsignedInteger('valid_quantity')->default(0);
+            $table->unsignedInteger('expired_quantity')->default(0);
+            $table->boolean('active')->default(false);
             $table->unsignedInteger('max')->default(100);
             $table->timestamps();
         });
