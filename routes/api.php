@@ -175,7 +175,11 @@ Route::middleware(['auth:sanctum', 'user.banned', 'user.verified'])->group(funct
         Route::post('order/excel', 'orderReportExcel');
         Route::post('order/pdf', 'orderReportPdf');
         Route::post('product', 'productReport');
+        Route::post('product/excel', 'productReportExcel');
+        Route::post('product/pdf', 'productReportPdf');
         Route::post('product/{product}', 'specificProductReport');
+        Route::post('product/{product}/excel', 'specificProductReportExcel');
+        Route::post('product/{product}/pdf', 'specificProductReportPdf');
     });
 
     Route::prefix('notifications')->controller(NotificationController::class)->group(function () {

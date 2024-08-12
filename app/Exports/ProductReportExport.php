@@ -11,13 +11,17 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class OrderReportExport implements FromArray, WithHeadings, WithStrictNullComparison, WithStyles, WithDefaultStyles
+class ProductReportExport implements FromArray, WithHeadings, WithStrictNullComparison, WithStyles, WithDefaultStyles
 {
     use Exportable;
 
     public function __construct(private array $report, private string $type = 'excel')
     {
-        //
+        // Remove 'product_image' from each report entry
+        $this->report = array_map(function ($reportEntry) {
+            unset($reportEntry['product_image']);
+            return $reportEntry;
+        }, $report);
     }
 
     /**
@@ -31,17 +35,14 @@ class OrderReportExport implements FromArray, WithHeadings, WithStrictNullCompar
     public function headings(): array
     {
         return [
-            'from',
-            'to',
-            'New Orders',
-            'Pending Orders',
-            'Deleted Orders',
-            'Rejected Orders',
-            'Under Preparing Orders',
-            'Cancelled Orders',
-            'Under Shipping Orders',
-            'Delivered Orders',
-            'Cost'
+            'Product Name',
+            'Quantity Ordered To Sell',
+            'Quantity Sold',
+            'Quantity Disposed',
+            'Quantity Expired',
+            'Quantity Purchased',
+            'Revenue',
+            'Cost',
         ];
     }
 

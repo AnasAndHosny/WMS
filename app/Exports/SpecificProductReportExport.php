@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class OrderReportExport implements FromArray, WithHeadings, WithStrictNullComparison, WithStyles, WithDefaultStyles
+class SpecificProductReportExport implements FromArray, WithHeadings, WithStrictNullComparison, WithStyles, WithDefaultStyles
 {
     use Exportable;
 
@@ -33,15 +33,13 @@ class OrderReportExport implements FromArray, WithHeadings, WithStrictNullCompar
         return [
             'from',
             'to',
-            'New Orders',
-            'Pending Orders',
-            'Deleted Orders',
-            'Rejected Orders',
-            'Under Preparing Orders',
-            'Cancelled Orders',
-            'Under Shipping Orders',
-            'Delivered Orders',
-            'Cost'
+            'Quantity Ordered To Sell',
+            'Quantity Sold',
+            'Quantity Disposed',
+            'Quantity Expired',
+            'Quantity Purchased',
+            'Revenue',
+            'Cost',
         ];
     }
 

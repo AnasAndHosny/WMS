@@ -3,15 +3,15 @@
 namespace App\Services;
 
 use App\Http\Resources\ProductResource;
-use Carbon\Carbon;
-use App\Models\Order;
-use App\Models\Product;
 use App\Models\Destruction;
-use App\Models\OrderStatus;
 use App\Models\Manufacturer;
+use App\Models\Order;
+use App\Models\OrderedProduct;
+use App\Models\OrderStatus;
+use App\Models\Product;
 use App\Models\SalesPorduct;
 use App\Models\StoredProduct;
-use App\Models\OrderedProduct;
+use Carbon\Carbon;
 
 class ReportService
 {
@@ -51,7 +51,11 @@ class ReportService
                 : Order::where('orderable_from_type', '!=', Manufacturer::class)
             );
 
-        $firstOrderDate = Carbon::parse((clone $ordersQuery)->orderBy('created_at')->first()->created_at)->startOfDay();
+        $firstOrderDate = Carbon::parse(
+            (clone $ordersQuery)->orderBy('created_at')
+                ->first()->created_at  ?? now()
+        )->startOfDay();
+
         $today = Carbon::now()->endOfDay();
 
         $fromDate = Carbon::parse($request->input('start_date'))->startOfDay();
@@ -269,13 +273,15 @@ class ReportService
         $firstOrderDate = Carbon::parse(
             $product->orderedProducts()
                 ->when($employableType, function ($query) use ($employableType, $employableId) {
-                    $query->where('orderable_by_type', $employableType)
-                        ->where('orderable_by_id', $employableId);
+                    $query->whereHas('order', function ($query) use ($employableType, $employableId) {
+                        $query->where('orderable_by_type', $employableType)
+                            ->where('orderable_by_id', $employableId);
+                    });
                 })
                 ->orderBy('created_at')
-                ->first()->created_at
-        )
-            ->startOfDay();
+                ->first()->created_at ?? now()
+        )->startOfDay();
+
         $today = Carbon::now()->endOfDay();
 
         $fromDate = Carbon::parse($request->input('start_date'))->startOfDay();
@@ -410,13 +416,13 @@ class ReportService
                 $reportEntry['revenue'] += $product->quantity * $product->price;
             }
 
-            $total['quantity_ordered_to_sell'] += $reportEntry ['quantity_ordered_to_sell'];
-            $total['quantity_sold'] += $reportEntry ['quantity_sold'];
-            $total['quantity_disposed'] += $reportEntry ['quantity_disposed'];
-            $total['quantity_expired'] += $reportEntry ['quantity_expired'];
-            $total['quantity_purchased'] += $reportEntry ['quantity_purchased'];
-            $total['revenue'] += $reportEntry ['revenue'];
-            $total['cost'] += $reportEntry ['cost'];
+            $total['quantity_ordered_to_sell'] += $reportEntry['quantity_ordered_to_sell'];
+            $total['quantity_sold'] += $reportEntry['quantity_sold'];
+            $total['quantity_disposed'] += $reportEntry['quantity_disposed'];
+            $total['quantity_expired'] += $reportEntry['quantity_expired'];
+            $total['quantity_purchased'] += $reportEntry['quantity_purchased'];
+            $total['revenue'] += $reportEntry['revenue'];
+            $total['cost'] += $reportEntry['cost'];
 
             $reportEntry['revenue'] = round($reportEntry['revenue'], 2);
             $reportEntry['cost'] = round($reportEntry['cost'], 2);
