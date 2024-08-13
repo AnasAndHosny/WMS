@@ -33,6 +33,7 @@ class StoredProductResource extends JsonResource
             'price' => $product->price,
             'subcategory_id' => $product->subcategory_id,
             'subcategory' => $product->subCategory->name,
+            'barcode' => $product->barcode,
             'expiration_date' => $this->expiration_date,
             $this->mergeWhen(
                 $this->storable_id == $employable->id && $this->storable_type == $employableType,

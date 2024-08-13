@@ -31,7 +31,8 @@ class ProductService
             'description_en' => $request['description_en'],
             'manufacturer_id' => $request['manufacturer_id'],
             'price' => $request['price'],
-            'subcategory_id' => $request['subcategory_id']
+            'subcategory_id' => $request['subcategory_id'],
+            'barcode' => $request['barcode'],
         ]);
 
         $product = new ProductResource($product);
@@ -60,6 +61,7 @@ class ProductService
             'manufacturer_id' => $request['manufacturer_id'] ?? $product['manufacturer_id'],
             'price' => $request['price'] ?? $product['price'],
             'subcategory_id' => $request['subcategory_id'] ?? $product['subcategory_id'],
+            'barcode' => $request['barcode'] ?? $product['barcode'],
         ]);
 
         $product = new ProductResource($product);

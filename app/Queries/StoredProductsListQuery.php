@@ -85,6 +85,11 @@ class StoredProductsListQuery extends QueryBuilder
             $query->where('products.price', '>=', $request->input('filter.more_expensive_than') * 100);
         });
 
+        // Filter by barcode
+        $this->when($request->has('filter.barcode'), function ($query) use ($request) {
+            $query->where('products.barcode', 'like', '%' . $request->input('filter.barcode') . '%');
+        });
+
         // General search filter
         $this->when($request->has('search'), function ($query) use ($request) {
             $searchTerm = $request->input('search');
@@ -94,7 +99,8 @@ class StoredProductsListQuery extends QueryBuilder
                     ->orWhere('manufacturers.name_en', 'like', '%' . $searchTerm . '%')
                     ->orWhere('manufacturers.name_ar', 'like', '%' . $searchTerm . '%')
                     ->orWhere('sub_categories.name_en', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('sub_categories.name_ar', 'like', '%' . $searchTerm . '%');
+                    ->orWhere('sub_categories.name_ar', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('products.barcode', 'like', '%' . $searchTerm . '%');
             });
         });
     }

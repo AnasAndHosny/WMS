@@ -28,11 +28,12 @@ class StoreProductRequest extends FormRequest
             'image' => ['image', 'nullable', 'mimes:jpeg,png,bmp,jpg,gif,svg', 'max:256'],
             'name_ar' => ['required', 'string', 'unique:products'],
             'name_en' => ['required', 'string', 'unique:products'],
-            'description_ar' => ['nullable','string'],
-            'description_en' => ['nullable','string'],
-            'manufacturer_id' => ['required','exists:manufacturers,id'],
+            'description_ar' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'manufacturer_id' => ['required', 'exists:manufacturers,id'],
             'price' => ['required', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
-            'subcategory_id' => ['required', 'exists:sub_categories,id']
+            'subcategory_id' => ['required', 'exists:sub_categories,id'],
+            'barcode' => ['nullable', 'string', 'numeric'],
         ];
     }
 

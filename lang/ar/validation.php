@@ -236,6 +236,7 @@ return [
         'permissions'           => 'الصلاحيات',
         'quantity'              => 'الكمية',
         'cause_id'              => 'سبب الإتلاف',
+        'barcode'               => 'الباركود',
     ],
 
 ];

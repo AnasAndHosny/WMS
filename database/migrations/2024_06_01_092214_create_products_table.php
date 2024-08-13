@@ -27,6 +27,7 @@ return new class extends Migration
                 ->constrained('sub_categories')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->string('barcode')->nullable()->default(null);
             $table->timestamps();
         });
     }

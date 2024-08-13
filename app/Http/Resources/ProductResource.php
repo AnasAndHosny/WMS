@@ -29,6 +29,7 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'subcategory_id' => $this->subcategory_id,
             'subcategory' => $this->subCategory->name,
+            'barcode' => $this->barcode
         ];
         if (Auth::user()->employee) {
             $product['total_quantity'] = $this->employableProduct ? (int)$this->employableProduct->total_quantity : 0;

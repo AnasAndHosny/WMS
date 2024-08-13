@@ -32,7 +32,8 @@ class UpdateProductRequest extends FormRequest
             'description_en' => ['sometimes', 'string'],
             'manufacturer_id' => ['sometimes', 'string', 'exists:manufacturers,id'],
             'price' => ['sometimes', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
-            'subcategory_id' => ['sometimes', 'exists:sub_categories,id']
+            'subcategory_id' => ['sometimes', 'exists:sub_categories,id'],
+            'barcode' => ['nullable', 'string', 'numeric'],
         ];
     }
 

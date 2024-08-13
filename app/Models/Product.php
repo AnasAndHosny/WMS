@@ -24,7 +24,8 @@ class Product extends Model
         'description_en',
         'manufacturer_id',
         'price',
-        'subcategory_id'
+        'subcategory_id',
+        'barcode'
     ];
 
     /**
