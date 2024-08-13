@@ -18,6 +18,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ShipmentController;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\DestructionController;
 use App\Http\Controllers\SubCategoryController;
@@ -182,6 +183,10 @@ Route::middleware(['auth:sanctum', 'user.banned', 'user.verified'])->group(funct
         Route::post('product/{product}/pdf', 'specificProductReportPdf')->middleware('can:report.show');
     });
 
+    Route::prefix('dashboard')->controller(DashboardController::class)->group(function () {
+        Route::get('/', 'index')->middleware('can:report.show');
+    });
+
     Route::prefix('notifications')->controller(NotificationController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('mark-all', 'markAllAsRead');
@@ -209,5 +214,5 @@ Route::get('/test/realtime', function () {
 });
 
 Route::get('/test/notifications', function () {
-    return Notification::send(User::find(1), new ProductQuantityWarningNotification(Product::find(1)));
+    return Notification::send(User::all(), new ProductQuantityWarningNotification(Product::find(1)));
 });

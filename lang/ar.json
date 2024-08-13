@@ -106,5 +106,10 @@
     "Your email has been verified successfully.":"تم توثيق بريدك الإلكتروني بنجاح.",
     "The resetting password code has been sent successfully to your email.":"تم إرسال رمز إعادة تعيين كلمة المرور إلى بريدك الإلكتروني بنجاح.",
     "Your password has been reset successfully.":"تم إعادة تعيين كلمة المرور الخاصة بك بنجاح.",
-    "notifications":"الإشعارات"
+    "notifications":"الإشعارات",
+    "dashboard":"لوحة التحكم",
+    "orders":"الطلبات",
+    "orders report":"تقرير الطلبيات",
+    "products report":"تقرير المنتجات",
+    "product report":"تقرير المنتج"
 }

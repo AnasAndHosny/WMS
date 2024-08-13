@@ -50,7 +50,8 @@ class Test implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'message' => "New Notification."
+            'message_en' => "New Notification.",
+            'message_ar' => "إشعار جديد.",
         ];
     }
 }

@@ -110,7 +110,7 @@ class ReportService
         // Return the report with a success message and status code
         return [
             'data' => $report,
-            'message' => __('messages.index_success', ['class' => __('Orders')]),
+            'message' => __('messages.show_success', ['class' => __('orders report')]),
             'code' => 200
         ];
     }
@@ -254,7 +254,7 @@ class ReportService
         // Return the report with a success message and status code
         return [
             'data' => $report,
-            'message' => __('messages.index_success', ['class' => __('Products')]),
+            'message' => __('messages.show_success', ['class' => __('products report')]),
             'code' => 200
         ];
     }
@@ -440,7 +440,7 @@ class ReportService
         // Return the report with a success message and status code
         return [
             'data' => $report,
-            'message' => __('messages.index_success', ['class' => __('Products')]),
+            'message' => __('messages.show_success', ['class' => __('product report')]),
             'code' => 200
         ];
     }

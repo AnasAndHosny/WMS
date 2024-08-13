@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationService
@@ -14,7 +13,10 @@ class NotificationService
 
         $data = [];
         foreach ($notifications as $notification) {
-            $data[] = ['message' => $notification->data['message_' . App::getlocale()]];
+            $data[] = [
+                'message_en' => $notification->data['message_en'],
+                'message_ar' => $notification->data['message_ar']
+            ];
         }
 
         $message = __('messages.index_success', ['class' => __('notifications')]);
