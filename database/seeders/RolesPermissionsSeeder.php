@@ -43,6 +43,7 @@ class RolesPermissionsSeeder extends Seeder
             'destruction.index', 'destruction.store', 'destruction.show',
             'manager.continue',
             'employee.ban',
+            'reports.show',
             'product.expired.notify', 'product.warning.notify'
         ];
 
@@ -62,6 +63,7 @@ class RolesPermissionsSeeder extends Seeder
             'shippingCompany.index', 'shippingCompany.show',
             'shipment.index', 'shipment.store', 'shipment.show',
             'destruction.index', 'destruction.store', 'destruction.show',
+            'reports.show',
             'product.expired.notify', 'product.warning.notify'
         ];
 
@@ -78,6 +80,7 @@ class RolesPermissionsSeeder extends Seeder
             'orders.index', 'orders.buy.store', 'orders.show', 'orders.buy.update', 'orders.own.update',
             'sale.index', 'sale.store', 'sale.show',
             'destruction.index', 'destruction.store', 'destruction.show',
+            'report.show',
             'product.expired.notify', 'product.warning.notify'
         ];
 

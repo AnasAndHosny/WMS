@@ -171,15 +171,15 @@ Route::middleware(['auth:sanctum', 'user.banned', 'user.verified'])->group(funct
     });
 
     Route::prefix('reports')->controller(ReportController::class)->group(function () {
-        Route::post('order', 'orderReport');
-        Route::post('order/excel', 'orderReportExcel');
-        Route::post('order/pdf', 'orderReportPdf');
-        Route::post('product', 'productReport');
-        Route::post('product/excel', 'productReportExcel');
-        Route::post('product/pdf', 'productReportPdf');
-        Route::post('product/{product}', 'specificProductReport');
-        Route::post('product/{product}/excel', 'specificProductReportExcel');
-        Route::post('product/{product}/pdf', 'specificProductReportPdf');
+        Route::post('order', 'orderReport')->middleware('can:report.show');
+        Route::post('order/excel', 'orderReportExcel')->middleware('can:report.show');
+        Route::post('order/pdf', 'orderReportPdf')->middleware('can:report.show');
+        Route::post('product', 'productReport')->middleware('can:report.show');
+        Route::post('product/excel', 'productReportExcel')->middleware('can:report.show');
+        Route::post('product/pdf', 'productReportPdf')->middleware('can:report.show');
+        Route::post('product/{product}', 'specificProductReport')->middleware('can:report.show');
+        Route::post('product/{product}/excel', 'specificProductReportExcel')->middleware('can:report.show');
+        Route::post('product/{product}/pdf', 'specificProductReportPdf')->middleware('can:report.show');
     });
 
     Route::prefix('notifications')->controller(NotificationController::class)->group(function () {
@@ -209,5 +209,5 @@ Route::get('/test/realtime', function () {
 });
 
 Route::get('/test/notifications', function () {
-    return Notification::send(User::all(), new ProductQuantityWarningNotification(Product::find(1)));
+    return Notification::send(User::find(1), new ProductQuantityWarningNotification(Product::find(1)));
 });

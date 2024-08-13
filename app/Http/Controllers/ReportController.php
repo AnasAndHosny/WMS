@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Throwable;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Services\ReportService;
 use App\Http\Responses\Response;
 use Illuminate\Http\JsonResponse;
@@ -14,6 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SpecificProductReportExport;
 use App\Http\Requests\Report\OrderReportRequest;
 use App\Http\Requests\Report\ProductReportRequest;
+use App\Http\Requests\Report\specificProductReportRequest;
 
 class ReportController extends Controller
 {
@@ -48,7 +48,7 @@ class ReportController extends Controller
         }
     }
 
-    public function specificProductReport(Request $request, Product $product): JsonResponse
+    public function specificProductReport(specificProductReportRequest $request, Product $product): JsonResponse
     {
         $data = [];
         try {
@@ -84,7 +84,7 @@ class ReportController extends Controller
         return Excel::download(new ProductReportExport($data['data']['report'], 'pdf'), 'products_report.pdf',  \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function specificProductReportExcel(Request $request, Product $product)
+    public function specificProductReportExcel(specificProductReportRequest $request, Product $product)
     {
         $data = $this->reportService->specificProductReport($request, $product);
         $report = $data['data']['report'];
@@ -93,7 +93,7 @@ class ReportController extends Controller
         return Excel::download(new SpecificProductReportExport($report), $productName . '_report.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
-    public function specificProductReportPdf(Request $request, Product $product)
+    public function specificProductReportPdf(specificProductReportRequest $request, Product $product)
     {
         $data = $this->reportService->specificProductReport($request, $product);
         $report = $data['data']['report'];
