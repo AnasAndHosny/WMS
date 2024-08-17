@@ -22,22 +22,22 @@ class Shipment extends Model
     protected function cost(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100
+            get: fn($value) => $value / 100,
+            set: fn($value) => $value * 100
         );
     }
 
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
+            get: fn($value) => Carbon::parse($value)->format('Y-m-d'),
         );
     }
 
     protected function updatedAt(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
+            get: fn($value) => Carbon::parse($value)->format('Y-m-d'),
         );
     }
 
@@ -56,11 +56,11 @@ class Shipment extends Model
 
         $employable = Auth::user()->employee->employable;
         $employableType = get_class($employable);
-        
-        return $query->select('shipments.*')
-            ->join('orders', 'shipments.id', '=', 'orders.id')
-            ->where('orders.orderable_from_type', $employableType)
-            ->where('orders.orderable_from_id', $employable->id)
-            ->orderBy('shipments.id', 'DESC');
+
+        return $query->whereHas('order', function ($query) use ($employable, $employableType) {
+            $query->where('orderable_from_type', $employableType)
+                ->where('orderable_from_id', $employable->id);
+        })
+            ->orderBy('id', 'DESC');
     }
 }

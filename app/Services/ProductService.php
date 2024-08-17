@@ -84,7 +84,7 @@ class ProductService
                 'employable_id' => $employable->id,
                 'product_id' => $product->id,
             ])
-            ->update([
+            ->updateQuietly([
                 'min_quantity' => $request['min_quantity']
             ]);
 

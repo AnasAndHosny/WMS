@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\ProductExpiredNotifyUser;
 use App\Models\User;
 use App\Events\ProductExpired;
 use Illuminate\Queue\InteractsWithQueue;
@@ -36,5 +37,9 @@ class SendProductExpiredNotification implements ShouldQueue
             ->get();
 
         Notification::send($users, new ProductExpiredNotification($storedProduct));
+
+        foreach ($users as $user) {
+            event(new ProductExpiredNotifyUser($storedProduct, $user));
+        }
     }
 }

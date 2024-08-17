@@ -39,7 +39,7 @@ class AuthController extends Controller
             $data = $this->userService->login($request);
             $user = $data['user'];
 
-            if ($user->isBanned()) {
+            if ($user && $user->isBanned()) {
                 $user->tokens()->delete();
                 $data = [
                     'error' => 'Banned'

@@ -48,16 +48,25 @@ class StoredProduct extends Model
 
     public function scopeValid($query)
     {
-        return $query->where('expiration_date', '>', Carbon::today()->endOfDay());
+        return $query->where(function ($query) {
+            $query->where('expiration_date', '>', Carbon::today()->endOfDay())
+                ->orWhereNull('expiration_date');
+        });
     }
     public function scopeExpired($query)
     {
-        return $query->where('expiration_date', '<=', Carbon::today()->endOfDay());
+        return $query->where(function ($query) {
+            $query->whereNotNull('expiration_date')
+                ->where('expiration_date', '<=', Carbon::today()->endOfDay());
+        });
     }
 
     public function scopeExpireBefore($query, $date)
     {
-        return $query->where('expiration_date', '<=', Carbon::parse($date));
+        return $query->where(function ($query) use ($date) {
+            $query->whereNotNull('expiration_date')
+                ->where('expiration_date', '<=', Carbon::parse($date));
+        });
     }
 
     public function scopeExpireAfter($query, $date)

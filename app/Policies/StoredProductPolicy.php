@@ -43,6 +43,17 @@ class StoredProductPolicy
     }
 
     /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, StoredProduct $storedProduct): Response
+    {
+        Gate::allows('view', $storedProduct);
+        return ($user->can('product.stored.update') && ($storedProduct->storable == $user->employee->employable))
+            ? Response::allow()
+            : Response::deny();
+    }
+
+    /**
      * Determine whether the user can destruct the product.
      */
     public function destruct(User $user, StoredProduct $storedProduct): Response

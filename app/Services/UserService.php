@@ -59,8 +59,8 @@ class UserService
                 $code = 200;
             }
         } else {
-            $message = __('User not found.');
-            $code = 404;
+            $message = __('User email & password does not match with our record.');
+            $code = 401;
         }
         return ['user' => $user, 'message' => $message, 'code' => $code];
     }
@@ -68,8 +68,13 @@ class UserService
     public function logout(): array
     {
         $user = Auth::user();
-        if (!is_null(Auth::user())) {
-            Auth::user()->currentAccessToken()->delete();
+        if (!is_null($user)) {
+            $user->currentAccessToken()->delete();
+
+            if ($user->roles->first()->type === null) {
+                $user->employee()->delete();
+            }
+
             $message = __('User logged out successfully.');
             $code = 200;
         } else {
@@ -136,7 +141,6 @@ class UserService
 
     public function backAdmin(): array
     {
-
         $user = Auth::user();
         $user->employee()->delete();
 

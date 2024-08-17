@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Events\ProductQuantityDecreased;
-use App\Models\Product;
+use App\Events\ProductQuantityWarningNotifyUser;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Notification;
@@ -35,5 +35,9 @@ class SendProductQuantityWarningNotification implements ShouldQueue
             ->get();
 
         Notification::send($users, new ProductQuantityWarningNotification($event->product));
+
+        foreach ($users as $user) {
+            event(new ProductQuantityWarningNotifyUser($event->product, $user));
+        }
     }
 }

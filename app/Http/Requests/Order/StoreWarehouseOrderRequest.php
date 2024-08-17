@@ -6,6 +6,7 @@ use App\Models\Warehouse;
 use App\Rules\ValidQuantity;
 use Illuminate\Validation\Rule;
 use App\Http\Responses\Response;
+use App\Models\DistributionCenter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -27,7 +28,7 @@ class StoreWarehouseOrderRequest extends FormRequest
     protected function passedValidation(): void
     {
         $user = Auth::user();
-        if ($user->roles->first()->type == 0) {
+        if (get_class($user->employee->employable) == DistributionCenter::class) {
             $this->replace(['warehouse_id' => Auth::user()->employee->employable->id]);
         }
     }
@@ -42,7 +43,7 @@ class StoreWarehouseOrderRequest extends FormRequest
         $warehouseId = $this->warehouse_id;
         $user = Auth::user();
         $employee = $user->employee;
-        if (!$user->roles->first()->type) {
+        if (get_class($user->employee->employable) == DistributionCenter::class) {
             $warehouseId = $employee->employable->warehouse_id;
         }
 

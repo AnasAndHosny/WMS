@@ -248,7 +248,7 @@ class OrderService
     public function receive(Order $order): array
     {
         $orderStatus = $order->status;
-        if ($orderStatus->name_en == 'Under Shipping' || ($order->orderable_from_type == 'Manufacturer' && $orderStatus->name_en != 'Delivered')) {
+        if ($orderStatus->name_en == 'Under Shipping' || ($order->orderable_from_type == Manufacturer::class && $orderStatus->name_en != 'Delivered')) {
             $order = DB::transaction(function () use ($order): Order {
                 $order->update([
                     'status_id' => OrderStatus::findByName('Delivered')->id

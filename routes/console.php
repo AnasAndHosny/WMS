@@ -21,6 +21,7 @@ Schedule::call(function () {
     $expiredProducts = StoredProduct::query()
     ->where('valid_quantity', '!=', 0)
     ->where('expired_quantity', 0)
+    ->whereNotNull('expiration_date')
     ->whereDate('expiration_date', '<=', now()->endOfDay())
     ->get();
 

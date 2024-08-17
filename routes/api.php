@@ -22,6 +22,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\DestructionController;
 use App\Http\Controllers\SubCategoryController;
+use App\Events\ProductQuantityWarningNotifyUser;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StoredProductController;
@@ -123,7 +124,7 @@ Route::middleware(['auth:sanctum', 'user.banned', 'user.verified'])->group(funct
         Route::get('warehouse', 'warehouseProductList')->middleware('can:warehouse.product.index');
         Route::get('warehouse/{warehouse}', 'warehousesProductList')->middleware('can:warehouses.product.index');
         Route::get('{storedProduct}', 'show')->middleware('can:view,storedProduct');
-        Route::patch('{storedProduct}', 'update')->middleware('can:product.stored.update');
+        Route::patch('{storedProduct}', 'update')->middleware('can:update,storedProduct');
         Route::post('{storedProduct}/destruction', [DestructionController::class, 'store'])->middleware('can:destruct,storedProduct');
     });
 
@@ -210,6 +211,8 @@ Route::prefix('destruction-causes')->controller(DestructionCauseController::clas
 });
 
 Route::get('/test/realtime', function () {
+    return event(new ProductQuantityWarningNotifyUser(Product::find(1), User::find(7)));
+
     return event(new Test());
 });
 

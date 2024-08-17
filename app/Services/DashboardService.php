@@ -46,7 +46,7 @@ class DashboardService
 
         $count = 0;
         foreach ($productReportCollect as $key => $value) {
-            if ($count == 10) break;
+            if ($count == 5) break;
 
             $topSellingProducts[] = [
                 'product' => new ProductResource(Product::where('name_' . App::getLocale(), $value['product_name'])->first()),

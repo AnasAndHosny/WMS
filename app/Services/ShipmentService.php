@@ -43,7 +43,7 @@ class ShipmentService
             $orderedProducts = $order->orderedProducts;
             foreach ($orderedProducts as $orderedProduct) {
                 StoredProduct::query()
-                    ->where('storable_type', $order->getRawOriginal('orderable_from_type'))
+                    ->where('storable_type', $order->orderable_from_type)
                     ->where('storable_id', $order->orderable_from_id)
                     ->where('product_id', $orderedProduct['product_id'])
                     ->where('expiration_date', $orderedProduct['expiration_date'])
@@ -51,7 +51,7 @@ class ShipmentService
                     ->decrement('valid_quantity', $orderedProduct['quantity']);
 
                 EmployableProduct::query()
-                    ->where('employable_type', $order->getRawOriginal('orderable_from_type'))
+                    ->where('employable_type', $order->orderable_from_type)
                     ->where('employable_id', $order->orderable_from_id)
                     ->where('product_id', $orderedProduct['product_id'])
                     ->first()

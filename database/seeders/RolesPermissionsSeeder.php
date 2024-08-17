@@ -30,7 +30,7 @@ class RolesPermissionsSeeder extends Seeder
         // Define permissions
         $adminPermissions = [
             'category.index', 'category.store', 'category.show', 'category.update', 'category.destroy',
-            'warehouse.index', 'warehouse.store', 'warehouse.centers.index', 'warehouse.show', 'warehouse.update', 'warehouse.own.show',
+            'warehouse.index', 'warehouse.store', 'warehouse.centers.index', 'warehouse.show', 'warehouse.update', 'warehouse.own.show', 'warehouses.product.index',
             'center.index', 'center.store', 'center.show', 'center.update', 'center.own.show',
             'product.index', 'product.store', 'product.show', 'product.update', 'product.min.update', 'product.stored.update',
             'employee.index', 'employee.store', 'employee.show', 'employee.update',
@@ -55,7 +55,7 @@ class RolesPermissionsSeeder extends Seeder
         // Define permissions
         $warehousePermissions = [
             'category.index', 'category.show',
-            'warehouse.index', 'warehouse.centers.index', 'warehouses.product.index',
+            'warehouse.index', 'warehouse.show', 'warehouse.centers.index', 'warehouses.product.index',
             'center.own.show',
             'product.index', 'product.show', 'product.min.update', 'product.stored.update',
             'manufacturer.index', 'manufacturer.show',
