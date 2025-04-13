@@ -30,7 +30,7 @@ class RolesPermissionsSeeder extends Seeder
         // Define permissions
         $adminPermissions = [
             'category.index', 'category.store', 'category.show', 'category.update', 'category.destroy',
-            'warehouse.index', 'warehouse.store', 'warehouse.centers.index', 'warehouse.show', 'warehouse.update', 'warehouse.own.show', 'warehouses.product.index',
+            'warehouse.index', 'warehouse.store', 'warehouse.centers.index', 'warehouse.show', 'warehouse.update', 'warehouse.own.show', 'warehouse.product.index',
             'center.index', 'center.store', 'center.show', 'center.update', 'center.own.show',
             'product.index', 'product.store', 'product.show', 'product.update', 'product.min.update', 'product.stored.update',
             'employee.index', 'employee.store', 'employee.show', 'employee.update',

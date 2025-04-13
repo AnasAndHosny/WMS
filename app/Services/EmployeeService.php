@@ -29,6 +29,10 @@ class EmployeeService
         $employee = DB::transaction(function () use ($request): Employee {
             $image = ImageService::store($request);
 
+            if ($image === null) {
+                $image = 'images/male3.jpg';
+            }
+
             $user = User::query()->create([
                 'image' => $image,
                 'name' => $request['username'],
@@ -73,6 +77,11 @@ class EmployeeService
         $employee = DB::transaction(function () use ($request, $employee): Employee {
             $user = $employee->user;
             $image = ImageService::update($request, $user);
+
+            if ($image === null) {
+                $image = 'images/male3.jpg';
+            }
+
             $user->update([
                 'image' => $image,
                 'name' => $request['username'] ?? $user['name'],
@@ -125,6 +134,10 @@ class EmployeeService
         $employee = DB::transaction(function () use ($request, $employee): Employee {
             $user = $employee->user;
             $image = ImageService::update($request, $user);
+
+            if ($image === null) {
+                $image = 'images/male3.jpg';
+            }
 
             $user->update([
                 'image' => $image,

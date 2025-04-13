@@ -15,20 +15,16 @@ class DestructionCauseSeeder extends Seeder
     {
         $causes = [
             [
-                'name_en' => 'first cause',
-                'name_ar' => 'السبب الأول'
+                'name_en' => 'Product Expired',
+                'name_ar' => 'انتهت صلاحية المنتج'
             ],
             [
-                'name_en' => 'second cause',
-                'name_ar' => 'السبب الثاني'
+                'name_en' => 'Product Spoiled',
+                'name_ar' => 'المنتج فسد'
             ],
             [
-                'name_en' => 'third cause',
-                'name_ar' => 'السبب الثالث'
-            ],
-            [
-                'name_en' => 'fourth cause',
-                'name_ar' => 'السبب الرابع'
+                'name_en' => 'Product Damaged',
+                'name_ar' => 'المنتج تضرر'
             ],
         ];
 

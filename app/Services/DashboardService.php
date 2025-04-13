@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\EmployableProduct;
 use App\Models\Product;
+use App\Models\Destruction;
 use Illuminate\Http\Request;
+use App\Models\StoredProduct;
+use App\Models\EmployableProduct;
 use Illuminate\Support\Facades\App;
 use App\Http\Resources\ProductResource;
-use App\Models\Destruction;
-use App\Models\StoredProduct;
+use App\Http\Resources\DashboardResourcee;
 
 class DashboardService
 {
@@ -44,12 +45,13 @@ class DashboardService
 
         $productReportCollect = collect($productReport['data']['report'])->sortByDesc('quantity_sold');
 
+        $topSellingProducts = [];
         $count = 0;
         foreach ($productReportCollect as $key => $value) {
             if ($count == 5) break;
 
             $topSellingProducts[] = [
-                'product' => new ProductResource(Product::where('name_' . App::getLocale(), $value['product_name'])->first()),
+                'product' => new DashboardResourcee(Product::where('name_' . App::getLocale(), $value['product_name'])->first()),
                 'quantity' => $value['quantity_sold'],
             ];
 

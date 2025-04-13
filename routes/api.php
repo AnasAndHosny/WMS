@@ -211,7 +211,7 @@ Route::prefix('destruction-causes')->controller(DestructionCauseController::clas
 });
 
 Route::get('/test/realtime', function () {
-    return event(new ProductQuantityWarningNotifyUser(Product::find(1), User::find(7)));
+    return event(new ProductQuantityWarningNotifyUser(Product::find(1), User::find(2)));
 
     return event(new Test());
 });

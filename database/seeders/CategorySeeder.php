@@ -15,34 +15,83 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'category' => [
-                    'name_ar' => '',
-                    'name_en' => ''
-                ],
+                'name_ar' => 'تسالي',
+                'name_en' => 'Pastimes',
+                'subcategories' => [
+                    [
+                        'image' => null,
+                        'name_ar' => 'شيبس',
+                        'name_en' => 'ships'
+                    ],
+                    [
+                        'image' => null,
+                        'name_ar' => 'بسكويت',
+                        'name_en' => 'biscuit'
+                    ],
+
+                ]
+            ],
+            [
+                'name_ar' => 'البقوليات',
+                'name_en' => 'legumes',
                 'subcategories' => [
                     [
                         'image' => '',
-                        'name_ar' => '',
-                        'name_en' => ''
+                        'name_ar' => 'برغل',
+                        'name_en' => 'Bulgur'
                     ],
                     [
                         'image' => '',
-                        'name_ar' => '',
-                        'name_en' => ''
+                        'name_ar' => 'رز',
+                        'name_en' => 'Rice'
                     ],
-                    [
-                        'image' => '',
-                        'name_ar' => '',
-                        'name_en' => ''
-                    ],
+                    
                 ]
             ],
+            [
+                'name_ar' => 'مستلزمات شخصية',
+                'name_en' => 'Personal supplies',
+                'subcategories' => [
+                    [
+                        'image' => '',
+                        'name_ar' => 'عناية بالأسنان',
+                        'name_en' => 'Toothpaste and toothbrushes '
+                    ],
+                    [
+                        'image' => '',
+                        'name_ar' => 'عناية بالبشرة',
+                        'name_en' => 'Skin Crae'
+                    ],
+                   
+                ]
+            ],
+            [
+                'name_ar' => 'منظفات',
+                'name_en' => 'Cleaners',
+                'subcategories' => [
+                    [
+                        'image' => null,
+                        'name_ar' => 'سائل غسيل',
+                        'name_en' => 'Laundry liquid'
+                    ],
+                    [
+                        'image' => null,
+                        'name_ar' => 'سائل جلي',
+                        'name_en' => 'Dishwashing liquid'
+                    ],
+
+                ]
+            ]
         ];
+
         foreach ($categories as $category) {
-            $category = Category::create($category['category']);
-            foreach ($category['subcategories'] as $subCategory) {
-                $category->subCategories()->create($subCategory);
-            }
+            $createdCategory = Category::create([
+                'name_ar' => $category['name_ar'],
+                'name_en' => $category['name_en'],
+
+            ]);
+
+            $createdCategory->subCategories()->createMany($category['subcategories']);
         }
     }
 }

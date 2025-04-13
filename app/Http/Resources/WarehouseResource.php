@@ -15,14 +15,14 @@ class WarehouseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => (int)$this->id,
             'image' => $this->image,
-            'name' => $this->name,
-            'name_ar' => $this->name_ar,
-            'name_en' => $this->name_en,
-            'city' => $this->city->name,
-            'state_id' => $this->state_id,
-            'state' => $this->state->name,
+            'name' => (string)$this->name,
+            'name_ar' => (string)$this->name_ar,
+            'name_en' => (string)$this->name_en,
+            'city' => (string)$this->city->name,
+            'state_id' => (int)$this->state_id,
+            'state' => (string)$this->state->name,
             'street_address' => $this->street_address,
             'street_address_ar' => $this->street_address_ar,
             'street_address_en' => $this->street_address_en

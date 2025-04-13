@@ -11,7 +11,7 @@ class ManufacturerService
     public function index($request): array
     {
         $manufacturer = new ManufacturersListQuery(Manufacturer::query(), $request);
-        
+
         $manufacturer = ManufacturerResource::collection($manufacturer->get());
         $message = __('messages.index_success', ['class' => __('manufacturers')]);
         $code = 200;
